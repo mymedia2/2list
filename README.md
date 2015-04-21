@@ -3,15 +3,15 @@
 
 ## Список типов
 ```c
-list_t
-lst_elem_t
-lst_iter_t
+typedef ... list_t;
+typedef ... lst_elem_t;
+typedef ... lst_iter_t;
 ```
 
 ## Список функций
 ```c
 int lst_new(list_t* p);
-void lst_erase(list_t lst);
+void lst_free(list_t lst);
 int lst_append(list_t lst, lst_elem_t el);
 int lst_insert_before(lst_iter_t it, lst_elem_t el);
 void lst_delete(lst_iter_t it);
