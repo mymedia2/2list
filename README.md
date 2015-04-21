@@ -11,13 +11,13 @@ lst_iter_t
 ## Список функций
 ```c
 int lst_new(list_t* p);
-void lst_delete(list_t lst);
-int lst_append(list_t lst, elem_t el);
-int lst_insert_after(lst_iter_t it, elem_t el);
-void lst_remove(lst_iter_t it);
+void lst_erase(list_t lst);
+int lst_append(list_t lst, lst_elem_t el);
+int lst_insert_before(lst_iter_t it, lst_elem_t el);
+void lst_delete(lst_iter_t it);
 lst_iter_t lst_iter_by_index(list_t lst, size_t i);
 lst_elem_t lst_index(list_t lst, size_t i);
-void lst_erase(list_t lst);
+void lst_clear(list_t lst);
 ```
 
 ## Список алгоритмов
