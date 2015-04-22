@@ -11,31 +11,31 @@ typedef ... lst_iter_t;
 
 ### Список функций
 ```c
-int lst_new(list_t* p);
-void lst_free(list_t lst);
-int lst_append(list_t lst, lst_elem_t el);
-int lst_insert_before(lst_iter_t it, lst_elem_t el);
-void lst_delete(lst_iter_t it);
-lst_iter_t lst_iter_by_index(list_t lst, size_t i);
-lst_elem_t lst_index(list_t lst, size_t i);
-void lst_clear(list_t lst);
+int lst_new(list_t* p); // Коля
+void lst_free(list_t lst); // Коля
+int lst_append(list_t lst, lst_elem_t el); // Вероника
+int lst_insert_before(lst_iter_t it, lst_elem_t el); // Дима Т.
+void lst_delete(lst_iter_t it); // Ксюша
+lst_iter_t lst_iter_by_index(list_t lst, size_t i); // Дима Т.
+lst_elem_t lst_index(list_t lst, size_t i); // Дима Т.
+void lst_clear(list_t lst); // Ксюша
 ```
 
 ### Список алгоритмов
 ```c
-lst_iter_t lst_binsearch(list_t lst, lst_elem_t val);
-size_t lst_count(list_t lst, lst_elem_t val);
-list_t lst_copy(list_t lst);
-int lst_compare(list_t lst1, list_t lst2);
-lst_iter_t lst_find(list_t lst, lst_elem_t val);
-void lst_for_each(list_t lst, lst_elem_t (*f)(lst_elem_t));
-lst_elem_t lst_max(list_t lst);
-lst_elem_t lst_min(list_t lst);
-void lst_random_shuffle(list_t lst);
-int lst_replace(list_t lst, lst_elem_t from, lst_elem_t to);
-int lst_remove(list_t lst, lst_elem_t val);
-void lst_sort(list_t lst);
-void lst_swap(list_t lst1, list_t lst2);
+lst_iter_t lst_binsearch(list_t lst, lst_elem_t val); // Коля
+size_t lst_count(list_t lst, lst_elem_t val); // Бок
+list_t lst_copy(list_t lst); // Вероника
+int lst_compare(list_t lst1, list_t lst2); // Коля
+lst_iter_t lst_find(list_t lst, lst_elem_t val); // Дима Т.
+void lst_for_each(list_t lst, lst_elem_t (*f)(lst_elem_t)); // Коля
+lst_elem_t lst_max(list_t lst); // Ксюша
+lst_elem_t lst_min(list_t lst); // Ксюша
+void lst_random_shuffle(list_t lst); // Дима Р.
+int lst_replace(list_t lst, lst_elem_t from, lst_elem_t to); // Бок
+int lst_remove(list_t lst, lst_elem_t val); // Бок
+void lst_sort(list_t lst); // Дима Р.
+void lst_swap(list_t lst1, list_t lst2); // Вероника
 ```
 
 ## Рекомендации по оформлению кода
