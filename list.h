@@ -1,6 +1,8 @@
 #ifndef LST_LIST_H
 #define LST_LIST_H
 
+#include <stddef.h>
+
 /*	Тип элементов в списке.
 
 	Пользователь библиотеки может определить какой тип элементов будет в
@@ -23,7 +25,7 @@
 	звена не используется.
 */
 struct lst_node_ {
-	lst_elem_t elem;
+	lst_elem_t elems[10];
 	struct lst_node_* prev;
 	struct lst_node_* next;
 };
@@ -44,6 +46,9 @@ typedef struct lst_node_* list_t;
 	Не стоит путать list_t и lst_iter_t. Первое — это контейнер, а второе —
 	указатель на элемент в этом контейнере.
 */
-typedef struct lst_node_* lst_iter_t;
+typedef struct {
+	struct lst_node_* box;
+	size_t offset;
+} lst_iter_t;
 
 #endif	/* LST_LIST_H */
