@@ -131,6 +131,6 @@ int lst_remove(list_t lst, lst_elem_t val);
 void lst_sort(list_t lst);
 
 /* Обменивает два списка lst1 и lst2 за константное время. */
-void lst_swap(list_t lst1, list_t lst2); // Вероника
+void lst_swap(list_t lst1, list_t lst2);
 
 #endif  /* LST_LIST_H */
