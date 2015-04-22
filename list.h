@@ -26,6 +26,7 @@
 */
 struct lst_node_ {
     lst_elem_t elems[10];
+    size_t count;
     struct lst_node_* prev;
     struct lst_node_* next;
 };
