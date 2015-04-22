@@ -10,3 +10,7 @@ lst_iter_t lst_iter_by_index(list_t lst, size_t i) {
     t.offset = i % 10;
     return t;
 }
+
+lst_elem_t lst_iter_deref(lst_iter_t t) {
+    return t.box->elems[t.offset];
+}
