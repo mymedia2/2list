@@ -14,3 +14,8 @@ int lst_new(list_t* p) {
 	*p = tmp;
 	return 1;
 }
+
+void lst_free(list_t lst) {
+	lst_clear(lst);
+	free(lst);
+}
