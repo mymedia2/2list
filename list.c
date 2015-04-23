@@ -3,40 +3,81 @@
 #include "list.h"
 
 int lst_new(list_t* p) {
-    struct lst_node_* tmp;
+	struct lst_node_* tmp;
 
-    tmp = malloc(sizeof(*tmp));
-    if (!tmp) {
-        /* не удалось выделить память — ошибка */
-        return 0;
-    }
+	/* создаём первое звено списка */
+	tmp = malloc(sizeof(*tmp));
+	if (!tmp) {
+		/* не удалось выделить память — ошибка */
+		return 0;
+	}
 
-    tmp->next = NULL;
-    tmp->prev = NULL;
-    tmp->count = 0;
-    *p = tmp;
-    return 1;
+	/* инициализирует вновь созданное звено */
+	tmp->count = 0;
+	tmp->next = tmp->prev = NULL;
+	/* инициализирует переданный список */
+	p->begin = p->end = tmp;
+
+	return 1;
 }
 
-void lst_free(list_t lst) {
-    lst_clear(lst);
-    free(lst);
+void lst_free(list_t* lst) {
+	/* TODO: lst_clear делает некоторые лишние действия,
+		от них можно было бы избавиться */
+	lst_clear(lst);
+	free(lst->begin);
 }
 
-void lst_clear(list_t lst) {
-    struct lst_node_* t, *p;
-    t = lst;
-    /* Удаляем элементы в первой ноде */
-    t->count = 0;
-    /* Удаляем весь остальной список*/
-    t = t->next;
-    while(t != NULL) {
-        p = t;
-        t = t->next;
-        free(p);
-    }
+void lst_clear(list_t* lst) {
+	struct lst_node_* tmp;
+	struct lst_node_* ptr;
+
+	/* удаляем элементы в первом звене */
+	lst->begin->count = 0;
+
+	/* удаляем весь остальной список */
+	tmp = lst->begin->next;
+	while (tmp) {
+		ptr = tmp;
+		tmp = tmp->next;
+		free(ptr);
+	}
+
+	/* синхронизируем указатели в списке */
+	lst->end = lst->begin;
 }
 
+int lst_append(list_t* list, lst_elem_t el) {
+	struct lst_node_* const last_node = list->end;
+	const size_t n = sizeof(last_node->elems) / sizeof(*last_node->elems);
+
+	if (last_node->count < n) {
+		/* в последнем звене ещё есть место — вставляем элемент туда */
+		last_node->elems[last_node->count++] = el;
+	} else {
+		/* последнее звено полностью заполнено — создаём новое */
+		struct lst_node_* tmp;
+
+		tmp = malloc(sizeof(*tmp));
+		if (!tmp) {
+			/* не удалось выделить память — ошибка */
+			return 0;
+		}
+
+		/* инициализируем вновь созданное звено */
+		tmp->elems[0] = el;
+		tmp->count = 1;
+		tmp->prev = last_node;
+		tmp->next = NULL;
+
+		/* прицепляем новое звено к списку */
+		last_node->next = list->end = tmp;
+	}
+
+	return 1;
+}
+
+#if zero
 lst_iter_t lst_iter_by_index(list_t lst, size_t i) {
     lst_iter_t t;
     size_t j;
@@ -127,22 +168,6 @@ size_t lst_size(list_t lst) {
     return counter;
 }
 
-int lst_append(list_t lst, lst_elem_t el) {
-    list_t* p;
-    while (lst->next) lst=lst->next;
-	if (lst->count < sizeof(lst->elems) / sizeof(*lst->elems)) {
-        lst->elems[lst->count++] = el;
-    } else {
-        if (lst_new(p)) {
-            (*p)->elems[0] = el;
-            (*p)->count = 1;
-            lst->next = *p;
-            (*p)->prev = lst;
-        } else return 0;
-    }
-    return 1;
-}
-
 list_t lst_copy(list_t lst) {
 	list_t t, st;
 	list_t* p;
@@ -203,3 +228,4 @@ lst_elem_t lst_min(list_t lst) {
 lst_iter_t lst_iter_first(list_t lst) {
 	return lst_iter_by_index(lst, 0);
 }
+#endif // zero
