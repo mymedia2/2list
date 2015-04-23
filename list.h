@@ -94,7 +94,7 @@ lst_iter_t lst_binsearch(list_t lst, lst_elem_t val);
 /* Возвращает количесво элементов со значением val в списке lst. */
 size_t lst_count(list_t lst, lst_elem_t val);
 
-/* Возвращает копию списка lst. */
+/* Возвращает копию списка lst, если не удалось скопировать, то возращает NULL*/
 list_t lst_copy(list_t lst);
 
 /*  Сравнивает два списка lst1 и lst2.
