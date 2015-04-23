@@ -62,7 +62,7 @@ lst_iter_t lst_iter_prev(lst_iter_t t) {
     return l;
 }
 
-int is_null( lst_iter_t t ) {
+int lst_iter_is_null( lst_iter_t t ) {
     return t.box == NULL;
 }
 
