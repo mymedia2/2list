@@ -25,8 +25,7 @@
     звена не используется.
 */
 struct lst_node_ {
-    lst_elem_t 
-    [10];
+	lst_elem_t elems[10];
     size_t count;
     struct lst_node_* prev;
     struct lst_node_* next;
@@ -110,7 +109,8 @@ lst_iter_t lst_find(list_t lst, lst_elem_t val);
 
 /*  Вызывает функцию f для всех элементов списка lst.
 
-    Значение, которое возвращает f, кладётся на место того элемента. */
+	Значение, которое возвращает f, кладётся на место того элемента.
+*/
 void lst_for_each(list_t lst, lst_elem_t (*f)(lst_elem_t));
 
 /* Возвращает наибольший элемент непустого списка lst. */
@@ -145,5 +145,8 @@ lst_elem_t lst_iter_deref(lst_iter_t t);
 
 /* Проверяет на NULL box итератора */
 int lst_iter_is_null( lst_iter_t t );
+
+/* Возвращает количество элементов в списке lst. */
+size_t lst_size(list_t lst);
 
 #endif  /* LST_LIST_H */

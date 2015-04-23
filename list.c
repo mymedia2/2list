@@ -114,11 +114,11 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el) {
     }
 }
 
-int lst_elem_count(list_t lst) {
-    list_t counter_lst=lst;
-	int counter = 0;
-    while ((counter_lst->next)!=NULL) {
-        counter_lst=counter_lst->next;
+size_t lst_size(list_t lst) {
+	list_t counter_lst = lst;
+	size_t counter = 0;
+	while ((counter_lst->next) != NULL) {
+		counter_lst = counter_lst->next;
         counter++; //Считаем кол-во объектов с списке
     }
 
@@ -130,7 +130,7 @@ int lst_elem_count(list_t lst) {
 int lst_append(list_t lst, lst_elem_t el) {
     list_t* p;
     while (lst->next) lst=lst->next;
-    if (lst->count < sizeof(lst->elems)/sizeof(*(lst->elems))) {
+	if (lst->count < sizeof(lst->elems) / sizeof(*lst->elems)) {
         lst->elems[lst->count++] = el;
     } else {
         if (lst_new(p)) {
@@ -177,25 +177,25 @@ list_t lst_copy(list_t lst) {
 }
 
 /* Возвращает наибольший элемент непустого списка lst. */
-lst_elem_t lst_max(list_t lst){
+lst_elem_t lst_max(list_t lst) {
 	lst_elem_t max;
 	lst_iter_t it = lst_iter_by_index(lst, 0);
 	max = lst_iter_deref(it);
-	
-	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) { 
+
+	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
 		if (max < lst_iter_deref(it)) max = lst_iter_deref(it);
 	}
 	return max;
-} 
+}
 
 /* Возвращает наибольший элемент непустого списка lst. */
 lst_elem_t lst_min(list_t lst){
 	lst_elem_t min;
 	lst_iter_t it = lst_iter_by_index(lst, 0);
 	min = lst_iter_deref(it);
-	
-	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) { 
+
+	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
 		if (lst_iter_deref(it) < min) min = lst_iter_deref(it);
 	}
 	return min;
-} 
+}
