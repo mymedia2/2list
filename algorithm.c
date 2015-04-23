@@ -3,7 +3,7 @@
 lst_iter_t lst_find(list_t lst, lst_elem_t val) {
     lst_iter_t t = lst_iter_by_index(lst, 0);
     size_t i;
-    for (; t.box->next != NULL; t = next(t) ) {
+    for (; t.box->next != NULL; t = lst_iter_next(t) ) {
         for (i = 0; i < t.box->count; ++i) {
             if( t.box->elems[i] == val ) {
                 t.offset = i;
@@ -17,12 +17,12 @@ lst_iter_t lst_find(list_t lst, lst_elem_t val) {
 }
 
 void lst_for_each(list_t lst, lst_elem_t (*f)(lst_elem_t)) {
-	size_t i;
+    size_t i;
 
-	/* итерируемся по списку, пропуская первое звено */
-	while (lst = lst->next) {
-		for (i = 0; i < lst->count; i++) {
-			lst->elems[i] = f(lst->elems[i]);
-		}
-	}
+    /* итерируемся по списку, пропуская первое звено */
+    while (lst = lst->next) {
+        for (i = 0; i < lst->count; i++) {
+            lst->elems[i] = f(lst->elems[i]);
+        }
+    }
 }

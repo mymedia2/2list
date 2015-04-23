@@ -42,7 +42,7 @@ lst_elem_t lst_index(list_t lst, size_t i) {
     return lst_iter_deref(lst_iter_by_index(lst, i));
 }
 
-lst_iter_t next(lst_iter_t t) {
+lst_iter_t lst_iter_next(lst_iter_t t) {
     lst_iter_t l;
     l.offset = (t.offset + 1) % t.box->count;
     if (l.offset == 0) l.box = t.box->next;
@@ -50,7 +50,7 @@ lst_iter_t next(lst_iter_t t) {
     return l;
 }
 
-lst_iter_t prev(lst_iter_t t) {
+lst_iter_t lst_iter_prev(lst_iter_t t) {
     lst_iter_t l;
     if (t.offset != 0) {
         l.offset = t.offset - 1;
@@ -96,3 +96,4 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el) {
         it.box->prev = tmp;
     }
 }
+
