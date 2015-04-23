@@ -115,3 +115,36 @@ int lst_append(list_t lst, lst_elem_t el) {
 	}
 	return 1;
 }
+
+list_t lst_copy(list_t lst) {
+	list_t t, st;
+	list_t* p;
+	size_t i;
+	/* Обрабатываем первую ноду и устанавливаем st на начало списка */
+	if (lst) {
+		if (lst_new(p)) {
+			t = *p;
+			st = t;
+			for (i = 0; i < lst->count; ++i)
+				t->elems[i] = lst->elems[i];
+			t->count = lst->count;
+		} else return NULL;
+	} else return NULL;
+	/* Обработка остальных элементов */
+	while (lst->next) {
+		lst = lst->next;
+		if (lst_new(p)) {
+			(*p)->prev = t;
+			t->next = *p;
+			t = *p;
+			st = t;
+			for (i = 0; i < lst->count; ++i)
+				t->elems[i] = lst->elems[i];
+			t->count = lst->count;
+		} else {
+			lst_free(t);
+			return NULL;
+		}
+	}
+	return st;
+}
