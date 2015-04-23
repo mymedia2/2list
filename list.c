@@ -10,7 +10,10 @@ int lst_new(list_t* p) {
         /* не удалось выделить память — ошибка */
         return 0;
     }
-
+    
+	tmp->next = NULL;
+	tmp->prev = NULL;
+	tmp->count = 0;
     *p = tmp;
     return 1;
 }
@@ -95,4 +98,20 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el) {
         tmp->next = it.box;
         it.box->prev = tmp;
     }
+}
+
+int lst_append(list_t lst, lst_elem_t el) {
+	list_t* p;
+	while (lst->next) lst=lst->next;
+	if (lst->count < sizeof(lst->elems)/sizeof(*(lst->elems))) {
+		lst->elems[lst->count++] = el;
+	} else {
+		if (lst_new(p)) {
+			(*p)->elems[0] = el;
+			(*p)->count = 1;
+			lst->next = *p;
+			(*p)->prev = lst;
+		} else return 0;
+	}
+	return 1;
 }
