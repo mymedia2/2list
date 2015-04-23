@@ -175,3 +175,27 @@ list_t lst_copy(list_t lst) {
 	}
 	return st;
 }
+
+/* Возвращает наибольший элемент непустого списка lst. */
+lst_elem_t lst_max(list_t lst){
+	lst_elem_t max;
+	lst_iter_t it = lst_iter_by_index(lst, 0);
+	max = lst_iter_deref(it);
+	
+	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) { 
+		if (max < lst_iter_deref(it)) max = lst_iter_deref(it);
+	}
+	return max;
+} 
+
+/* Возвращает наибольший элемент непустого списка lst. */
+lst_elem_t lst_min(list_t lst){
+	lst_elem_t min;
+	lst_iter_t it = lst_iter_by_index(lst, 0);
+	min = lst_iter_deref(it);
+	
+	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) { 
+		if (lst_iter_deref(it) < min) min = lst_iter_deref(it);
+	}
+	return min;
+} 
