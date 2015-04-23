@@ -6,11 +6,17 @@ int main() {
 	int i;
 
 	lst_new(&L);
-	for (i = 0; i < 1000; i++) {
+	for (i = 0; i < 13; i++) {
 		lst_append(L, 42);
 		lst_append(L, 13);
 	}
-	printf("%d\n", (int)lst_size(L));
+	printf("%zd\n", lst_size(L));
+
+	lst_iter_t p;
+	for (p = lst_iter_first(L); !lst_iter_is_null(p); p = lst_iter_next(p)) {
+		printf("%ld ", lst_iter_deref(p));
+	}
+	printf("\n");
 
 	lst_free(L);
 

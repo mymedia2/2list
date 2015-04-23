@@ -189,7 +189,7 @@ lst_elem_t lst_max(list_t lst) {
 }
 
 /* Возвращает наибольший элемент непустого списка lst. */
-lst_elem_t lst_min(list_t lst){
+lst_elem_t lst_min(list_t lst) {
 	lst_elem_t min;
 	lst_iter_t it = lst_iter_by_index(lst, 0);
 	min = lst_iter_deref(it);
@@ -198,4 +198,8 @@ lst_elem_t lst_min(list_t lst){
 		if (lst_iter_deref(it) < min) min = lst_iter_deref(it);
 	}
 	return min;
+}
+
+lst_iter_t lst_iter_first(list_t lst) {
+	return lst_iter_by_index(lst, 0);
 }

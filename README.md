@@ -23,7 +23,7 @@ lst_iter_t lst_iter_next(lst_iter_t t); // Дима Т.
 lst_iter_t lst_iter_prev(lst_iter_t t); // Дима Т.
 lst_elem_t lst_iter_deref(lst_iter_t t); // Дима Т.
 int lst_iter_is_null(lst_iter_t t); // Дима Т.
-size_t lst_size(list_t lst); // Дима Т.
+size_t lst_size(list_t lst); // Дима Р.
 ```
 
 ### Алгоритмы

@@ -140,6 +140,16 @@ lst_iter_t lst_iter_next(lst_iter_t t);
 /* Переходит на предыдущий элемент */
 lst_iter_t lst_iter_prev(lst_iter_t t); 
 
+/*	Возвращает итератор, указывающий на первый элемент списка lst, или нулевой,
+	если список пуст.
+*/
+lst_iter_t lst_iter_first(list_t lst);
+
+/*	Возвращает итератор, указывающий на последний элемент списка lst, или
+	нулевой, если список пуст.
+*/
+lst_iter_t lst_iter_last(list_t lst);
+
 /* Возвращает элемент, на который указывает итератор */
 lst_elem_t lst_iter_deref(lst_iter_t t);
 
