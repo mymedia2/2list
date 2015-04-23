@@ -19,6 +19,10 @@ void lst_delete(lst_iter_t it); // Ксюша
 lst_iter_t lst_iter_by_index(list_t lst, size_t i); // Дима Т.
 lst_elem_t lst_index(list_t lst, size_t i); // Дима Т.
 void lst_clear(list_t lst); // Ксюша
+lst_iter_t lst_iter_next(lst_iter_t t) // Дима Т.
+lst_iter_t lst_iter_prev(lst_iter_t t) // Дима Т.
+lst_elem_t lst_iter_deref(lst_iter_t t) // Дима Т.
+int lst_iter_is_null( lst_iter_t t ) // Дима Т.
 ```
 
 ### Алгоритмы

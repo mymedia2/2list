@@ -11,6 +11,9 @@ int lst_new(list_t* p) {
         return 0;
     }
 
+	tmp->next = NULL;
+	tmp->prev = NULL;
+	tmp->count = 0;
     *p = tmp;
     return 1;
 }
@@ -62,7 +65,7 @@ lst_iter_t lst_iter_prev(lst_iter_t t) {
     return l;
 }
 
-int is_null( lst_iter_t t ) {
+int lst_iter_is_null( lst_iter_t t ) {
     return t.box == NULL;
 }
 
@@ -108,4 +111,20 @@ int lst_elem_count(list_t lst) {
 	counter*=10; ///У нас 10 элементов в объекте, так что считаем число counter*10;
 	counter+=counter_lst->count; //Элементы в последнем звене;
 	return counter;
+}
+
+int lst_append(list_t lst, lst_elem_t el) {
+	list_t* p;
+	while (lst->next) lst=lst->next;
+	if (lst->count < sizeof(lst->elems)/sizeof(*(lst->elems))) {
+		lst->elems[lst->count++] = el;
+	} else {
+		if (lst_new(p)) {
+			(*p)->elems[0] = el;
+			(*p)->count = 1;
+			lst->next = *p;
+			(*p)->prev = lst;
+		} else return 0;
+	}
+	return 1;
 }
