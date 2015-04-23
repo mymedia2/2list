@@ -116,14 +116,14 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el) {
 
 int lst_elem_count(list_t lst) {
     list_t counter_lst=lst;
-    int counter;
+	int counter = 0;
     while ((counter_lst->next)!=NULL) {
         counter_lst=counter_lst->next;
         counter++; //Считаем кол-во объектов с списке
     }
 
-    counter*=10; ///У нас 10 элементов в объекте, так что считаем число counter*10;
-    counter+=counter_lst->count; //Элементы в последнем звене;
+	counter *= 10; ///У нас 10 элементов в объекте, так что считаем число counter*10;
+	counter += counter_lst->count; //Элементы в последнем звене;
     return counter;
 }
 
