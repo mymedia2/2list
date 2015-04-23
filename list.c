@@ -10,10 +10,10 @@ int lst_new(list_t* p) {
         /* не удалось выделить память — ошибка */
         return 0;
     }
-    
-	tmp->next = NULL;
-	tmp->prev = NULL;
-	tmp->count = 0;
+
+    tmp->next = NULL;
+    tmp->prev = NULL;
+    tmp->count = 0;
     *p = tmp;
     return 1;
 }
@@ -21,6 +21,20 @@ int lst_new(list_t* p) {
 void lst_free(list_t lst) {
     lst_clear(lst);
     free(lst);
+}
+
+void lst_clear(list_t lst) {
+    struct lst_node_* t, *p;
+    t = lst;
+    /* Удаляем элементы в первой ноде */
+    t->count = 0;
+    /* Удаляем весь остальной список*/
+    t = t->next;
+    while(t != NULL) {
+        p = t;
+        t = t->next;
+        free(p);
+    }
 }
 
 lst_iter_t lst_iter_by_index(list_t lst, size_t i) {
@@ -100,20 +114,33 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el) {
     }
 }
 
+int lst_elem_count(list_t lst) {
+    list_t counter_lst=lst;
+    int counter;
+    while (counter_lst=counter_lst->next!==NULL) {
+        counter++; //Считаем кол-во объектов с списке
+    }
+    counter++; //считаем предполседний элемент
+
+    counter*=10; ///У нас 10 элементов в объекте, так что считаем число counter*10;
+    counter+=counter_lst->count; //Элементы в последнем звене;
+    return counter;
+}
+
 int lst_append(list_t lst, lst_elem_t el) {
-	list_t* p;
-	while (lst->next) lst=lst->next;
-	if (lst->count < sizeof(lst->elems)/sizeof(*(lst->elems))) {
-		lst->elems[lst->count++] = el;
-	} else {
-		if (lst_new(p)) {
-			(*p)->elems[0] = el;
-			(*p)->count = 1;
-			lst->next = *p;
-			(*p)->prev = lst;
-		} else return 0;
-	}
-	return 1;
+    list_t* p;
+    while (lst->next) lst=lst->next;
+    if (lst->count < sizeof(lst->elems)/sizeof(*(lst->elems))) {
+        lst->elems[lst->count++] = el;
+    } else {
+        if (lst_new(p)) {
+            (*p)->elems[0] = el;
+            (*p)->count = 1;
+            lst->next = *p;
+            (*p)->prev = lst;
+        } else return 0;
+    }
+    return 1;
 }
 
 list_t lst_copy(list_t lst) {
