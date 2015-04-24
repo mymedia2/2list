@@ -3,7 +3,7 @@
 
 #include "list.h"
 
-list_t* lst_new(int) {
+list_t* lst_new(int flags) {
 	list_t* list;
 	struct lst_node_* node;
 
@@ -180,36 +180,14 @@ size_t lst_size(list_t lst) {
 }
 
 list_t lst_copy(list_t lst) {
-	list_t t, st;
 	list_t* p;
-	size_t i;
-	/* Обрабатываем первую ноду и устанавливаем st на начало списка */
-	if (lst) {
-		if (lst_new(p)) {
-			t = *p;
-			st = t;
-			for (i = 0; i < lst->count; ++i)
-				t->elems[i] = lst->elems[i];
-			t->count = lst->count;
-		} else return NULL;
-	} else return NULL;
-	/* Обработка остальных элементов */
-	while (lst->next) {
-		lst = lst->next;
-		if (lst_new(p)) {
-			(*p)->prev = t;
-			t->next = *p;
-			t = *p;
-			st = t;
-			for (i = 0; i < lst->count; ++i)
-				t->elems[i] = lst->elems[i];
-			t->count = lst->count;
-		} else {
-			lst_free(t);
-			return NULL;
+	if (lst_new(p)) {
+		lst_iter_t it = lst_iter_by_index(lst, 0);
+		for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
+			lst_append(*p, lst_iter_deref(it));
 		}
-	}
-	return st;
+		return *p;
+	} else return NULL;
 }
 
 /* Возвращает наибольший элемент непустого списка lst. */
@@ -239,4 +217,25 @@ lst_elem_t lst_min(list_t lst) {
 
 lst_iter_t lst_iter_first(list_t* lst) {
 	return lst_iter_by_index(lst, 0);
+}
+
+void lst_delete(lst_iter_t it) {
+	size_t k, m;
+	k = it.box->count;
+	if (k == 1) {
+		struct lst_node_* t;
+		t = it.box;
+		t->next = it.box->next;
+		t = it.box->next;
+		t->prev = it.box->prev;
+		t = it.box;
+		free(t);
+	} else {
+		m = it.offset;
+		while (m < k) {
+			/* FIXME: неопределённое поведение */
+			it.box->elems[m] = it.box->elems[++m];
+		}
+		it.box->count--;
+	}
 }
