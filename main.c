@@ -2,7 +2,7 @@
 #include "list.h"
 
 int main() {
-	list_t L;
+	list_t L, T;
 	int i;
 
 	lst_new(&L);
@@ -17,7 +17,12 @@ int main() {
 		printf("%ld ", lst_iter_deref(p));
 	}
 	printf("\n");
-
+	T = lst_copy(L);
+	for (p = lst_iter_first(T); !lst_iter_is_null(p); p = lst_iter_next(p)) {
+		printf("%ld ", lst_iter_deref(p));
+	}
+	printf("\n");
+	lst_free(T);
 	lst_free(L);
 
 	return 0;
