@@ -28,16 +28,16 @@ size_t lst_size(list_t lst); // Дима Р.
 
 ### Алгоритмы
 ```c
-lst_iter_t lst_binsearch(list_t lst, lst_elem_t val); // Коля
+lst_iter_t lst_binsearch(list_t lst, lst_elem_t val); // Коля (не будем делать)
 size_t lst_count(list_t lst, lst_elem_t val); // Бок
-list_t lst_copy(list_t lst); // Вероника
+list_t lst_copy(list_t lst); // Вероника (сделано)
 int lst_compare(list_t lst1, list_t lst2); // Коля
 lst_iter_t lst_find(list_t lst, lst_elem_t val); // Дима Т.
 void lst_for_each(list_t lst, lst_elem_t (*f)(lst_elem_t)); // Коля
-lst_elem_t lst_max(list_t lst); // Ксюша
-lst_elem_t lst_min(list_t lst); // Ксюша
+lst_elem_t lst_max(list_t lst); // Ксюша (сделано)
+lst_elem_t lst_min(list_t lst); // Ксюша (сделано)
 void lst_random_shuffle(list_t lst); // Дима Р.
-int lst_replace(list_t lst, lst_elem_t from, lst_elem_t to); // Бок
+int lst_replace(list_t lst, lst_elem_t from, lst_elem_t to); // Бок (сделано)
 int lst_remove(list_t lst, lst_elem_t val); // Бок
 void lst_sort(list_t lst); // Дима Р.
 void lst_swap(list_t lst1, list_t lst2); // Вероника
