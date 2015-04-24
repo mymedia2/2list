@@ -71,7 +71,7 @@ typedef struct {
 
     В случае успеха возвращает ненулевое значение, иначе 0.
 */
-int lst_new(list_t* p);
+list_t* lst_new(int flags);
 
 /* Уничтожает список lst и освобождает память. */
 void lst_free(list_t* lst);

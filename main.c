@@ -5,7 +5,7 @@ int main() {
 	list_t L;
 	int i;
 
-	lst_new(&L);
+	L = lst_new(0);
 	for (i = 0; i < 13; i++) {
 		lst_append(&L, i);
 		lst_append(&L, 42);

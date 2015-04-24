@@ -3,27 +3,37 @@
 
 #include "list.h"
 
-int lst_new(list_t* p) {
-	struct lst_node_* tmp;
+list_t* lst_new(int) {
+	list_t* list;
+	struct lst_node_* node;
 
-	/* создаём первое звено списка */
-	tmp = malloc(sizeof(*tmp));
-	if (!tmp) {
+	/* создаём список и его первое звено */
+	list = malloc(sizeof(*list));
+	if (!list) {
 		/* не удалось выделить память — ошибка */
-		return 0;
+		return NULL;
+	}
+	node = malloc(sizeof(*node));
+	if (!node) {
+		/*	не удалось выделить память — ошибка,
+			нужно освободить уже выделенную память для списка */
+		free(list);
+		return NULL;
 	}
 
-	/* инициализирует вновь созданное звено */
-	tmp->count = 0;
-	tmp->next = tmp->prev = NULL;
-	/* инициализирует переданный список */
-	p->begin = p->end = tmp;
+	/*	проставление ссылок в структуре list_t
+		и инициализация первого звена */
+	list->begin = list->end = node;
+	node->count = 0;
+	node->next = node->prev = NULL;
 
-	return 1;
+	return list;
 }
 
 void lst_free(list_t* lst) {
 	lst_clear(lst);
+	/*	в данной реализации подразумевается, что в пустом списке всегда
+		есть одно звено, в котором поле count равно 0 */
 	assert(lst->begin == lst->end);
 	free(lst->begin);
 }
