@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdlib.h>
 
 #include "list.h"
@@ -22,9 +23,8 @@ int lst_new(list_t* p) {
 }
 
 void lst_free(list_t* lst) {
-	/* TODO: lst_clear делает некоторые лишние действия,
-		от них можно было бы избавиться */
 	lst_clear(lst);
+	assert(lst->begin == lst->end);
 	free(lst->begin);
 }
 
@@ -77,26 +77,26 @@ int lst_append(list_t* list, lst_elem_t el) {
 	return 1;
 }
 
-#if zero
-lst_iter_t lst_iter_by_index(list_t lst, size_t i) {
-    lst_iter_t t;
-    size_t j;
-    const size_t size = sizeof(lst->elems) / sizeof(*lst->elems);
+lst_iter_t lst_iter_by_index(list_t* list, size_t index) {
+	lst_iter_t it;
+	struct lst_node_* curr = list->begin;
+	size_t i;
 
-    for (j = size; j < i; j += size) {
-        lst = lst->next;
-    }
-    t.box = lst;
-    t.offset = i % size;
+	for (i = curr->count; i < index; i += curr->count) {
+		curr = curr->next;
+	}
 
-    return t;
+	it.box = curr;
+	it.offset = index % curr->count;
+
+	return it;
 }
 
 lst_elem_t lst_iter_deref(lst_iter_t t) {
     return t.box->elems[t.offset];
 }
 
-lst_elem_t lst_index(list_t lst, size_t i) {
+lst_elem_t lst_index(list_t* lst, size_t i) {
     return lst_iter_deref(lst_iter_by_index(lst, i));
 }
 
@@ -124,6 +124,7 @@ int lst_iter_is_null( lst_iter_t t ) {
     return t.box == NULL;
 }
 
+#if zero
 int lst_insert_before(lst_iter_t it, lst_elem_t el) {
     const size_t n = sizeof(it.box->elems) / sizeof(lst_elem_t); 
     if (it.box->count < n && it.offset != 0) {
@@ -224,8 +225,8 @@ lst_elem_t lst_min(list_t lst) {
 	}
 	return min;
 }
+#endif // zero
 
-lst_iter_t lst_iter_first(list_t lst) {
+lst_iter_t lst_iter_first(list_t* lst) {
 	return lst_iter_by_index(lst, 0);
 }
-#endif // zero

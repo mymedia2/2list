@@ -96,10 +96,10 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el);
 void lst_delete(lst_iter_t it);
 
 /* Возвращает итератор, указывающий на i-тый элемент списка lst. */
-lst_iter_t lst_iter_by_index(list_t lst, size_t i);
+lst_iter_t lst_iter_by_index(list_t* lst, size_t i);
 
 /* Возвращает i-тый элемент списка lst. */
-lst_elem_t lst_index(list_t lst, size_t i);
+lst_elem_t lst_index(list_t* lst, size_t i);
 
 /*  Выполняет бинарный поиск значения val в списке lst.
 
@@ -160,18 +160,18 @@ lst_iter_t lst_iter_prev(lst_iter_t t);
 /*	Возвращает итератор, указывающий на первый элемент списка lst, или нулевой,
 	если список пуст.
 */
-lst_iter_t lst_iter_first(list_t lst);
+lst_iter_t lst_iter_first(list_t* lst);
 
 /*	Возвращает итератор, указывающий на последний элемент списка lst, или
 	нулевой, если список пуст.
 */
-lst_iter_t lst_iter_last(list_t lst);
+lst_iter_t lst_iter_last(list_t* lst);
 
 /* Возвращает элемент, на который указывает итератор */
 lst_elem_t lst_iter_deref(lst_iter_t t);
 
 /* Проверяет на NULL box итератора */
-int lst_iter_is_null( lst_iter_t t );
+int lst_iter_is_null(lst_iter_t t);
 
 /* Возвращает количество элементов в списке lst. */
 size_t lst_size(list_t lst);
