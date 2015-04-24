@@ -211,9 +211,10 @@ void lst_delete(lst_iter_t it) {
     } else {
         m = it.offset;
         while (m < k) {
-            it.box->elems[m] = it.box->elems[++m];
+			it.box->elems[m] = it.box->elems[m+1];
+			m++;
         }
-        (it.box->count)--;
+		it.box->count--;
     }
 }
 
