@@ -3,29 +3,40 @@
 
 #include "list.h"
 
-int lst_new(list_t* p) {
-	struct lst_node_* tmp;
+list_t* lst_new() {
+	/*	TODO: работоспособность этого кода зависит от реализации,
+		поэтому его стот заключить в блоки условной компиляции */
 
-	/* создаём первое звено списка */
-	tmp = malloc(sizeof(*tmp));
+	void* tmp;
+
+	/*	распределяем память для указателей на первое
+		и последнее звенья, а также для первого звена */
+	tmp = malloc(sizeof(list_t) + sizeof(struct lst_node_));
 	if (!tmp) {
 		/* не удалось выделить память — ошибка */
-		return 0;
+		return NULL;
 	}
 
-	/* инициализирует вновь созданное звено */
-	tmp->count = 0;
-	tmp->next = tmp->prev = NULL;
-	/* инициализирует переданный список */
-	p->begin = p->end = tmp;
+	list_t* const list = tmp;
+	struct lst_node_* const node = tmp + sizeof(list_t);
 
-	return 1;
+	/* инициализируем вновь созданное звено */
+	node->count = 0;
+	node->next = node->prev = NULL;
+	/* инициализируем новый список */
+	list->begin = list->end = node;
+
+	return list;
 }
 
 void lst_free(list_t* lst) {
 	lst_clear(lst);
 	assert(lst->begin == lst->end);
-	free(lst->begin);
+
+	/*	TODO: работоспособность нижеследующего кода зависит от реализации,
+		поэтому его стот заключить в блоки условной компиляции, причины
+		см. в lst_new */
+	free(lst);
 }
 
 void lst_clear(list_t* lst) {
