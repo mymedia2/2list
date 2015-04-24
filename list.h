@@ -25,7 +25,7 @@
     звена не используется.
 */
 struct lst_node_ {
-	lst_elem_t elems[10];
+    lst_elem_t elems[10];
     size_t count;
     struct lst_node_* prev;
     struct lst_node_* next;
@@ -109,7 +109,7 @@ lst_iter_t lst_find(list_t lst, lst_elem_t val);
 
 /*  Вызывает функцию f для всех элементов списка lst.
 
-	Значение, которое возвращает f, кладётся на место того элемента.
+    Значение, которое возвращает f, кладётся на место того элемента.
 */
 void lst_for_each(list_t lst, lst_elem_t (*f)(lst_elem_t));
 
@@ -140,13 +140,13 @@ lst_iter_t lst_iter_next(lst_iter_t t);
 /* Переходит на предыдущий элемент */
 lst_iter_t lst_iter_prev(lst_iter_t t); 
 
-/*	Возвращает итератор, указывающий на первый элемент списка lst, или нулевой,
-	если список пуст.
+/*  Возвращает итератор, указывающий на первый элемент списка lst, или нулевой,
+    если список пуст.
 */
 lst_iter_t lst_iter_first(list_t lst);
 
-/*	Возвращает итератор, указывающий на последний элемент списка lst, или
-	нулевой, если список пуст.
+/*  Возвращает итератор, указывающий на последний элемент списка lst, или
+    нулевой, если список пуст.
 */
 lst_iter_t lst_iter_last(list_t lst);
 
@@ -158,5 +158,8 @@ int lst_iter_is_null( lst_iter_t t );
 
 /* Возвращает количество элементов в списке lst. */
 size_t lst_size(list_t lst);
+
+/*меняет два элемента местами*/
+void lst_swap_d (list_t lst, int first, int second);
 
 #endif  /* LST_LIST_H */

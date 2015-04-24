@@ -115,78 +115,78 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el) {
 }
 
 size_t lst_size(list_t lst) {
-	list_t counter_lst = lst;
-	size_t counter = 0;
-	while ((counter_lst->next) != NULL) {
-		counter_lst = counter_lst->next;
+    list_t counter_lst = lst;
+    size_t counter = 0;
+    while ((counter_lst->next) != NULL) {
+        counter_lst = counter_lst->next;
         counter++; //Считаем кол-во объектов с списке
     }
 
-	counter *= 10; ///У нас 10 элементов в объекте, так что считаем число counter*10;
-	counter += counter_lst->count; //Элементы в последнем звене;
+    counter *= 10; ///У нас 10 элементов в объекте, так что считаем число counter*10;
+    counter += counter_lst->count; //Элементы в последнем звене;
     return counter;
 }
 
 int lst_append(list_t lst, lst_elem_t el) {
     list_t p;
     if (lst->count == 0) {
-		lst->elems[lst->count++] = el;
-		
-	} else {
-		
-		while (lst->next) lst=lst->next;
-		if (lst->count < sizeof(lst->elems) / sizeof(*lst->elems)) {
-			lst->elems[lst->count++] = el;
-		} else {
-		/*Здесь функция lst_new(p) создает не список, а звено*/
-			if (lst_new(&p)) {
-				p->elems[0] = el;
-				p->count = 1;
-				lst->next = p;
-				p->prev = lst;
-			} else return 0;
-		}
-	}
+        lst->elems[lst->count++] = el;
+        
+    } else {
+        
+        while (lst->next) lst=lst->next;
+        if (lst->count < sizeof(lst->elems) / sizeof(*lst->elems)) {
+            lst->elems[lst->count++] = el;
+        } else {
+        /*Здесь функция lst_new(p) создает не список, а звено*/
+            if (lst_new(&p)) {
+                p->elems[0] = el;
+                p->count = 1;
+                lst->next = p;
+                p->prev = lst;
+            } else return 0;
+        }
+    }
     return 1;
 }
 
 list_t lst_copy(list_t lst) {
-	list_t* p;
-	if (lst_new(p)) {
-		lst_iter_t it = lst_iter_by_index(lst, 0);
-		for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
-			lst_append(*p, lst_iter_deref(it));
-		}
-		return *p;
-	} else return NULL;
+    list_t* p;
+    if (lst_new(p)) {
+        lst_iter_t it = lst_iter_by_index(lst, 0);
+        for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
+            lst_append(*p, lst_iter_deref(it));
+        }
+        return *p;
+    } else return NULL;
 }
 
 /* Возвращает наибольший элемент непустого списка lst. */
 lst_elem_t lst_max(list_t lst) {
-	lst_elem_t max;
-	lst_iter_t it = lst_iter_by_index(lst, 0);
-	max = lst_iter_deref(it);
+    lst_elem_t max;
+    lst_iter_t it = lst_iter_by_index(lst, 0);
+    max = lst_iter_deref(it);
 
-	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
-		if (max < lst_iter_deref(it)) max = lst_iter_deref(it);
-	}
-	return max;
+    for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
+        if (max < lst_iter_deref(it)) max = lst_iter_deref(it);
+    }
+    return max;
 }
 
 /* Возвращает наибольший элемент непустого списка lst. */
 lst_elem_t lst_min(list_t lst) {
-	lst_elem_t min;
-	lst_iter_t it = lst_iter_by_index(lst, 0);
-	min = lst_iter_deref(it);
+    lst_elem_t min;
+    lst_iter_t it = lst_iter_by_index(lst, 0);
+    min = lst_iter_deref(it);
 
-	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
-		if (lst_iter_deref(it) < min) min = lst_iter_deref(it);
-	}
-	return min;
+    for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
+        if (lst_iter_deref(it) < min) min = lst_iter_deref(it);
+    }
+    return min;
 }
 
 lst_iter_t lst_iter_first(list_t lst) {
-	return lst_iter_by_index(lst, 0);
+    return lst_iter_by_index(lst, 0);
 }
 
 void lst_delete(lst_iter_t it) {
@@ -208,3 +208,25 @@ void lst_delete(lst_iter_t it) {
         (it.box->count)--;
     }
 }
+
+void lst_swap_d(list_t lst, int first, int second) { //Подаются номера элементов
+    int boost, firstD = (first - 1) / 10.0, secondD = (second - 1) / 10.0;
+    list_t firstP = lst, secondP = lst;
+    
+    while (firstD-- > 0) { //Находим ссылку на звено первого элемента
+        firstP = firstP->next;
+    }
+    
+    while (secondD-- > 0) { //Находим ссылку на звено второго элемента
+        secondP = secondP->next;
+    }
+    
+    firstD = first % 10; //для экономии используем те же переменные для нахождения элемента в звене
+    secondD = second % 10;
+    
+    boost = secondP->elems[secondD]; //меняем местами
+    boost = secondP->elems[secondD]; //меняем местами
+    secondP->elems[secondD] = firstP->elems[firstD];
+    firstP->elems[firstD] = boost;
+}    
+   
