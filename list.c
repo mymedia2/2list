@@ -195,3 +195,23 @@ lst_elem_t lst_min(list_t lst) {
 lst_iter_t lst_iter_first(list_t lst) {
 	return lst_iter_by_index(lst, 0);
 }
+
+void lst_delete(lst_iter_t it) {
+    size_t k, m;
+    k = it.box->count;
+    if (k == 1) {
+        struct lst_node_ *t;
+        t = it.box;
+        t->next = it.box->next;
+        t = it.box->next;
+        t->prev = it.box->prev;
+        t = it.box;
+        free (t);
+    } else {
+        m = it.offset;
+        while (m < k) {
+            it.box->elems[m] = it.box->elems[++m];
+        }
+        (it.box->count)--;
+    }
+}
