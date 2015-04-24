@@ -128,52 +128,37 @@ size_t lst_size(list_t lst) {
 }
 
 int lst_append(list_t lst, lst_elem_t el) {
-    list_t* p;
-    while (lst->next) lst=lst->next;
-	if (lst->count < sizeof(lst->elems) / sizeof(*lst->elems)) {
-        lst->elems[lst->count++] = el;
-    } else {
-        if (lst_new(p)) {
-            (*p)->elems[0] = el;
-            (*p)->count = 1;
-            lst->next = *p;
-            (*p)->prev = lst;
-        } else return 0;
-    }
+    list_t p;
+    if (lst->count == 0) {
+		lst->elems[lst->count++] = el;
+		
+	} else {
+		
+		while (lst->next) lst=lst->next;
+		if (lst->count < sizeof(lst->elems) / sizeof(*lst->elems)) {
+			lst->elems[lst->count++] = el;
+		} else {
+		/*Здесь функция lst_new(p) создает не список, а звено*/
+			if (lst_new(&p)) {
+				p->elems[0] = el;
+				p->count = 1;
+				lst->next = p;
+				p->prev = lst;
+			} else return 0;
+		}
+	}
     return 1;
 }
 
 list_t lst_copy(list_t lst) {
-	list_t t, st;
 	list_t* p;
-	size_t i;
-	/* Обрабатываем первую ноду и устанавливаем st на начало списка */
-	if (lst) {
-		if (lst_new(p)) {
-			t = *p;
-			st = t;
-			for (i = 0; i < lst->count; ++i)
-				t->elems[i] = lst->elems[i];
-			t->count = lst->count;
-		} else return NULL;
-	} else return NULL;
-	/* Обработка остальных элементов */
-	while (lst->next) {
-		lst = lst->next;
-		if (lst_new(p)) {
-			(*p)->prev = t;
-			t->next = *p;
-			t = *p;
-			st = t;
-			for (i = 0; i < lst->count; ++i)
-				t->elems[i] = lst->elems[i];
-			t->count = lst->count;
-		} else {
-			lst_free(t);
-			return NULL;
+	if (lst_new(p)) {
+		lst_iter_t it = lst_iter_by_index(lst, 0);
+		for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
+			lst_append(*p, lst_iter_deref(it));
 		}
-	}
-	return st;
+		return *p;
+	} else return NULL;
 }
 
 /* Возвращает наибольший элемент непустого списка lst. */
