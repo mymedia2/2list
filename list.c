@@ -138,7 +138,7 @@ int lst_append(list_t lst, lst_elem_t el) {
 		if (lst->count < sizeof(lst->elems) / sizeof(*lst->elems)) {
 			lst->elems[lst->count++] = el;
 		} else {
-		/*Здесь функция lst_new(p) создает не список, а звено*/
+		/*Здесь функция lst_new(&p) создает не список, а звено*/
 			if (lst_new(&p)) {
 				p->elems[0] = el;
 				p->count = 1;
@@ -161,7 +161,15 @@ list_t lst_copy(list_t lst) {
 	} else return NULL;
 }
 
-/* Возвращает наибольший элемент непустого списка lst. */
+int lst_replace(list_t lst, lst_elem_t from, lst_elem_t to) {
+	lst_iter_t it = lst_iter_by_index(lst, 0);
+	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
+		if ( lst_iter_deref(it) == from ) { 
+			it.box->elems[it.offset] = to;
+		}
+	}
+}
+
 lst_elem_t lst_max(list_t lst) {
 	lst_elem_t max;
 	lst_iter_t it = lst_iter_by_index(lst, 0);
@@ -173,7 +181,6 @@ lst_elem_t lst_max(list_t lst) {
 	return max;
 }
 
-/* Возвращает наибольший элемент непустого списка lst. */
 lst_elem_t lst_min(list_t lst) {
 	lst_elem_t min;
 	lst_iter_t it = lst_iter_by_index(lst, 0);

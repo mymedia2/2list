@@ -11,7 +11,7 @@ int main() {
 		lst_append(L, 13);
 	}
 	printf("%zd\n", lst_size(L));
-
+	lst_replace(L, 42, 24); 
 	lst_iter_t p;
 	for (p = lst_iter_first(L); !lst_iter_is_null(p); p = lst_iter_next(p)) {
 		printf("%ld ", lst_iter_deref(p));
