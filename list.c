@@ -151,14 +151,16 @@ int lst_append(list_t lst, lst_elem_t el) {
 }
 
 list_t lst_copy(list_t lst) {
-	list_t* p;
-	if (lst_new(p)) {
+	list_t p;
+	if (lst_new(&p)) {
 		lst_iter_t it = lst_iter_by_index(lst, 0);
 		for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
-			lst_append(*p, lst_iter_deref(it));
+			lst_append(p, lst_iter_deref(it));
 		}
-		return *p;
-	} else return NULL;
+		return p;
+	} else {
+		return NULL;
+	}
 }
 
 int lst_replace(list_t lst, lst_elem_t from, lst_elem_t to) {
