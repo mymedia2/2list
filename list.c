@@ -168,6 +168,7 @@ int lst_replace(list_t lst, lst_elem_t from, lst_elem_t to) {
 			it.box->elems[it.offset] = to;
 		}
 	}
+	return 0;
 }
 
 lst_elem_t lst_max(list_t lst) {
@@ -214,4 +215,14 @@ void lst_delete(lst_iter_t it) {
         }
         (it.box->count)--;
     }
+}
+
+size_t lst_count(list_t lst, lst_elem_t val) {
+	lst_iter_t it = lst_iter_first(lst);
+	size_t kol;
+	kol = 0;
+	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
+		if ( lst_iter_deref(it) == val) { kol = kol + 1; }
+	}
+	return kol;
 }

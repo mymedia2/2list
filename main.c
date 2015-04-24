@@ -4,6 +4,7 @@
 int main() {
 	list_t L, T;
 	int i;
+	lst_elem_t v = 24;
 
 	lst_new(&L);
 	for (i = 0; i < 13; i++) {
@@ -22,6 +23,7 @@ int main() {
 		printf("%ld ", lst_iter_deref(p));
 	}
 	printf("\n");
+	printf ("Элемент %zd встречается в списке L %zd раз\n", v, lst_count(L, 24));
 	lst_free(T);
 	lst_free(L);
 
