@@ -66,7 +66,7 @@ printf("Hello, world!");
 ### lst_new
 <!-- doctest: run -->
 ```c
-list_t* L;
+list_t L;
 if (!lst_new(&L)) {
 	/* ошибка при создании списка  */
 	abort();
@@ -78,7 +78,7 @@ lst_free(L);
 ### lst_free
 <!-- doctest: pass -->
 ```c
-list_t* L;
+list_t L;
 if (!lst_new(&L)) {
 	/* ошибка при создании списка  */
 	abort();
@@ -106,9 +106,9 @@ lst_append(L, 13);
 
 <!-- doctest: code -->
 ```c
-lst_iter_t p = lst_find(L, 68);
-lst_insert_before(p, 42);
-p = lst_iter_by_index(L, 3);
+//lst_iter_t p = lst_find(L, 68);
+//lst_insert_before(p, 42);
+lst_iter_t p = lst_iter_by_index(L, 3);
 lst_insert_before(p, 13);
 ```
 
