@@ -51,22 +51,22 @@ def before():
 		print("lst_append(L, {0});".format(elem))
 
 def after():
-	for elem in get_line_block().split():
-		print("lst_append(L, {0});".format(elem))
+	print(get_line_block() + " ", file=result)
 
 def app():
-	global readme
+	global readme, result
 
 	# выкусывает строчки вида "<!-- doctest: (.*) -->"
 	wild_expr = re.compile(r"\s*<!--\s*doctest\s*:(.+)\s*-->\s*")
 
 	readme = { "file": open(sys.argv[1]), "line": 0 }
+	result = open(sys.argv[2], "w")
 
 	print("""
-	#include <stdio.h>
-	#include <stdlib.h>
-	#include "list.h"
-	int main() {
+		#include <stdio.h>
+		#include <stdlib.h>
+		#include "list.h"
+		int main() {
 	""")
 
 	while True:
@@ -82,6 +82,6 @@ def app():
 	
 	print("return 0; }")
 
-func = { "run": run, "pass": pass_pre, "code": code, "before": before }
+func = { "run": run, "pass": pass_pre, "code": code, "before": before, "after": after }
 
 if __name__ == "__main__": app()
