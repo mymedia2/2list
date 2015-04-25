@@ -2,6 +2,7 @@ PHONY: run clean
 
 run: test
 	./test | diff - test.out
+	@echo Тесты пройдены
 
 test.out test.c: README.md doctest.py
 	./doctest.py README.md test.out > test.c

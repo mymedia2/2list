@@ -106,9 +106,9 @@ lst_append(L, 13);
 
 <!-- doctest: code -->
 ```c
-//lst_iter_t p = lst_find(L, 68);
-//lst_insert_before(p, 42);
-lst_iter_t p = lst_iter_by_index(L, 3);
+lst_iter_t p = lst_find(L, 68);
+lst_insert_before(p, 42);
+p = lst_iter_by_index(L, 3);
 lst_insert_before(p, 13);
 ```
 
