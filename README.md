@@ -89,7 +89,7 @@ lst_free(L);
 
 ### lst_append
 <!-- doctest: before -->
-**Было:** `96 78 84 61 57 30 43 50 71`
+**Список:** `96 78 84 61 57 30 43 50 71`
 
 <!-- doctest: code -->
 ```c
@@ -98,11 +98,11 @@ lst_append(L, 13);
 ```
 
 <!-- doctest: after -->
-**Стало:** `96 78 84 61 57 30 43 50 71 42 13`
+**Результат:** `96 78 84 61 57 30 43 50 71 42 13`
 
 ### lst_insert_before
 <!-- doctest: before -->
-**Было:** `28 13 74 2 52 58 68 95 65`
+**Список:** `28 13 74 2 52 58 68 95 65`
 
 <!-- doctest: code -->
 ```c
@@ -113,4 +113,42 @@ lst_insert_before(p, 13);
 ```
 
 <!-- doctest: after -->
-**Стало:** `28 13 74 13 2 52 58 42 68 95 65`
+**Результат:** `28 13 74 13 2 52 58 42 68 95 65`
+
+### lst_delete
+<!-- doctest: before -->
+**Список:** `64 54 89 76 52 71 4 23 24`
+
+<!-- doctest: code -->
+```c
+lst_delete(lst_find(L, 52));
+lst_delete(lst_iter_by_index(L, 2));
+```
+
+<!-- doctest: after -->
+**Результат:** `64 54 76 71 4 23 24`
+
+### lst_iter_by_index
+### lst_index
+<!-- doctest: pass -->
+**Список:** `19 0 69 79 46 23 93 11 31`
+
+<!-- doctest: pass -->
+```c
+lst_index(L, 6);
+```
+
+<!-- doctest: pass -->
+**Результат:** `19 0 69 79 46 23 93 11 31`
+
+### lst_clear
+<!-- doctest: before -->
+**Список:** `65 15 44 42 51 4 74 40 75`
+
+<!-- doctest: code -->
+```c
+lst_clear(L);
+```
+
+<!-- doctest: after -->
+**Результат:** ` `

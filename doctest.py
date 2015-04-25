@@ -51,7 +51,7 @@ def before():
 		print("lst_append(L, {0});".format(elem))
 
 def after():
-	print(get_line_block() + " ", file=result)
+	print(get_line_block(), file=result)
 
 def app():
 	global readme, result
