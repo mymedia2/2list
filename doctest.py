@@ -14,7 +14,7 @@ def get_code():
 		result = ""
 		while True:
 			line = readme["file"].readline()
-			if not line or line == "```\n": break
+			if not line or line.strip() == "```": break
 			readme["line"] += 1
 			result += line
 		return result
@@ -45,6 +45,15 @@ def code():
 	""")
 	print("lst_free(L); }")
 
+def assert_pre():
+	for line in get_code().strip().split("\n"):
+		line = line.replace(";", "")
+		print(r"""printf(({0}) ? "true " : "false ");""".format(line))
+		print("true ", end="", file=result)
+	print(r"""printf("\n");""")
+	print(file=result)
+	print("lst_free(L); }")
+
 def before():
 	print("{ list_t L; lst_new(&L);")
 	for elem in get_line_block().split():
@@ -57,7 +66,7 @@ def app():
 	global readme, result
 
 	# выкусывает строчки вида "<!-- doctest: (.*) -->"
-	wild_expr = re.compile(r"\s*<!--\s*doctest\s*:(.+)\s*-->\s*")
+	wild_expr = re.compile(r"<!--\s*doctest\s*:(.+)\s*-->")
 
 	readme = { "file": open(sys.argv[1]), "line": 0 }
 	result = open(sys.argv[2], "w")
@@ -74,7 +83,7 @@ def app():
 		if not text: break
 		readme["line"] += 1
 
-		command = re.match(wild_expr, text)
+		command = re.match(wild_expr, text.strip())
 		if command:
 			cmd = [ l.strip() for l in command.groups() ]
 			if cmd[0] in func: func[cmd[0]](*cmd[1:])
@@ -82,6 +91,12 @@ def app():
 	
 	print("return 0; }")
 
-func = { "run": run, "pass": pass_pre, "code": code, "before": before, "after": after }
+func = { "run": run,
+         "pass": pass_pre,
+         "code": code,
+         "before": before,
+         "after": after,
+		 "assert": assert_pre,
+       }
 
 if __name__ == "__main__": app()

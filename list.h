@@ -84,13 +84,6 @@ lst_elem_t lst_index(list_t lst, size_t i);
 /* Очищает список lst. */
 void lst_clear(list_t lst);
 
-/*  Выполняет бинарный поиск значения val в списке lst.
-
-    Возвращает итератор, указывающий на найденный элемент. Список должен быть
-    отсортирован.
-*/
-lst_iter_t lst_binsearch(list_t lst, lst_elem_t val);
-
 /* Возвращает количесво элементов со значением val в списке lst. */
 size_t lst_count(list_t lst, lst_elem_t val);
 
