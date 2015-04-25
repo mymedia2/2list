@@ -152,6 +152,53 @@ lst_clear(L);
 <!-- doctest: after -->
 **Результат:** ` `
 
+### lst_count
+<!-- doctest: before -->
+**Список:** `37 13 78 74 13 29 71 6 13 51 90 32 13 95`
+
+<!-- doctest: assert -->
+```c
+lst_count(L, 13) == 4;
+```
+
+### lst_copy
+### lst_compare
+### lst_find
+### lst_for_each
+<!-- doctest: pass -->
+**Список:** `56 15 69 24 16`
+
+<!-- doctest: pass -->
+```c
+lst_elem_t func(lst_elem_t l) {
+	return l + 1;
+}
+...
+lst_for_each(L, func);
+```
+
+<!-- doctest: pass -->
+**Результат:** `57 16 70 25 17`
+
+### lst_max
+<!-- doctest: before -->
+**Список:** `39 53 48 27 17 83 75 15 28`
+
+<!-- doctest: assert -->
+```c
+lst_max(L) == 83;
+```
+
+### lst_min
+<!-- doctest: before -->
+**Список:** `39 53 48 27 17 83 75 15 28`
+
+<!-- doctest: assert -->
+```c
+lst_min(L) == 15;
+```
+
+### lst_random_shuffle
 ### lst_replace
 <!-- doctest: before -->
 **Список:** `35 60 69 4 69 82 42 69 90 32 87 69 76`
@@ -187,3 +234,13 @@ lst_sort(L);
 
 <!-- doctest: after -->
 **Результат:** `11 15 19 35 40 42 55 61 62 63 78 91`
+
+
+### lst_size
+<!-- doctest: before -->
+**Список:** `72 64 62 75 20 15 68 64 74 57 16 24 84 97 43 54 92 26 27`
+
+<!-- doctest: assert -->
+```c
+lst_size(L) == 19;
+```
