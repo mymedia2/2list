@@ -168,16 +168,14 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el) {
 }
 
 size_t lst_size(list_t lst) {
-	list_t counter_lst = lst;
+	lst_iter_t p;
 	size_t counter = 0;
-	while ((counter_lst->next) != NULL) {
-		counter_lst = counter_lst->next;
-        counter++; //Считаем кол-во объектов с списке
-    }
 
-	counter *= 10; ///У нас 10 элементов в объекте, так что считаем число counter*10;
-	counter += counter_lst->count; //Элементы в последнем звене;
-    return counter;
+	for (p = lst_iter_first(L); !lst_iter_is_null(p); p = lst_iter_next(p)) {
+		counter++;
+	}
+
+	return counter;
 }
 
 list_t lst_copy(list_t lst) {
