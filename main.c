@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include "list.h"
 
+long increment(long a) {
+	return a + 1;
+}
+
 int main() {
 	list_t* L;
 	list_t* T;
@@ -28,6 +32,8 @@ int main() {
 
 	T = lst_copy(L);
 	lst_free(L);
+
+	lst_for_each(T, increment);
 
 	printf("T = { ");
 	for (p = lst_iter_first(T); !lst_iter_is_null(p); p = lst_iter_next(p)) {

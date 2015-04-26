@@ -132,7 +132,7 @@ lst_iter_t lst_find(list_t* lst, lst_elem_t val);
 
 	Значение, которое возвращает f, кладётся на место того элемента.
 */
-void lst_for_each(list_t lst, lst_elem_t (*f)(lst_elem_t));
+void lst_for_each(list_t* lst, lst_elem_t (*f)(lst_elem_t));
 
 /* Возвращает наибольший элемент непустого списка lst. */
 lst_elem_t lst_max(list_t* lst);
