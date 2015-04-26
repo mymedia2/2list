@@ -5,6 +5,7 @@ int main() {
 	list_t* L;
 //	list_t* T;
 	int i;
+	lst_iter_t p;
 
 	L = lst_new(0);
 	for (i = 0; i < 13; i++) {
@@ -14,16 +15,15 @@ int main() {
 	}
 //	printf("%zd\n", lst_size(&L));
 
-	lst_iter_t p;
+	printf("L = { ");
 	for (p = lst_iter_first(L); !lst_iter_is_null(p); p = lst_iter_next(p)) {
-		printf("%ld ", lst_iter_deref(p));
+		printf("%ld, ", lst_iter_deref(p));
 	}
-	printf("\n");
+	printf("}\n");
 
 	for (i = 5; i < 30; i += 4) {
-		printf("%ld ", lst_index(L, i));
+		printf("L[%d] == %ld\n", i, lst_index(L, i));
 	}
-	printf("\n");
 
 //	T = lst_copy(L);
 	lst_free(L);

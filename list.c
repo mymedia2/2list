@@ -3,7 +3,7 @@
 
 #include "list.h"
 
-list_t* lst_new(int flags) {
+list_t* lst_new(int arg_flags) {
 	list_t* list;
 	struct lst_node_* node;
 
@@ -24,6 +24,7 @@ list_t* lst_new(int flags) {
 	/*	проставление ссылок в структуре list_t
 		и инициализация первого звена */
 	list->begin = list->end = node;
+	list->flags = arg_flags;
 	node->count = 0;
 	node->next = node->prev = NULL;
 
@@ -90,14 +91,14 @@ int lst_append(list_t* list, lst_elem_t el) {
 lst_iter_t lst_iter_by_index(list_t* list, size_t index) {
 	lst_iter_t it;
 	struct lst_node_* curr = list->begin;
-	size_t i;
 
-	for (i = curr->count; i < index; i += curr->count) {
+	while (index >= curr->count) {
+		index -= curr->count;
 		curr = curr->next;
 	}
 
 	it.box = curr;
-	it.offset = index % curr->count;
+	it.offset = index;
 
 	return it;
 }
