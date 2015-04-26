@@ -37,6 +37,7 @@ void lst_free(list_t* lst) {
 		есть одно звено, в котором поле count равно 0 */
 	assert(lst->begin == lst->end);
 	free(lst->begin);
+	free(lst);
 }
 
 void lst_clear(list_t* lst) {
@@ -243,6 +244,7 @@ void lst_delete(lst_iter_t it) {
 	} else {
 		m = it.offset;
 		while (m < k) {
+			/* FIXME: выход за границы диапазона */
 			it.box->elems[m] = it.box->elems[m+1];
 			m++;
 		}
