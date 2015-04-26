@@ -124,8 +124,9 @@ list_t* lst_copy(list_t* lst);
 */
 int lst_compare(list_t lst1, list_t lst2);
 
-/* Возвращает итератор, указывающий на первое вхождение значения val в список lst. */
-lst_iter_t lst_find(list_t lst, lst_elem_t val);
+/*	Возвращает итератор, указывающий на первое вхождение значения val в
+	список lst, или нулевой итератор, если значение не найдено. */
+lst_iter_t lst_find(list_t* lst, lst_elem_t val);
 
 /*  Вызывает функцию f для всех элементов списка lst.
 
