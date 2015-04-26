@@ -166,29 +166,32 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el) {
         it.box->prev = tmp;
     }
 }
+#endif // zero
 
-size_t lst_size(list_t lst) {
+size_t lst_size(list_t* lst) {
 	lst_iter_t p;
 	size_t counter = 0;
 
-	for (p = lst_iter_first(L); !lst_iter_is_null(p); p = lst_iter_next(p)) {
+	for (p = lst_iter_first(lst); !lst_iter_is_null(p); p = lst_iter_next(p)) {
 		counter++;
 	}
 
 	return counter;
 }
 
-list_t lst_copy(list_t lst) {
+list_t* lst_copy(list_t* lst) {
 	list_t* p;
-	if (lst_new(p)) {
+
+	if (p = lst_new(0)) {
 		lst_iter_t it = lst_iter_by_index(lst, 0);
 		for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
-			lst_append(*p, lst_iter_deref(it));
+			lst_append(p, lst_iter_deref(it));
 		}
-		return *p;
-	} else return NULL;
+	}
+	return p;
 }
 
+#if zero
 /* Возвращает наибольший элемент непустого списка lst. */
 lst_elem_t lst_max(list_t lst) {
 	lst_elem_t max;

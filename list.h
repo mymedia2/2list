@@ -115,7 +115,7 @@ lst_iter_t lst_binsearch(list_t lst, lst_elem_t val);
 size_t lst_count(list_t lst, lst_elem_t val);
 
 /* Возвращает копию списка lst, если не удалось скопировать, то возращает NULL*/
-list_t lst_copy(list_t lst);
+list_t* lst_copy(list_t* lst);
 
 /*  Сравнивает два списка lst1 и lst2.
 
@@ -177,6 +177,6 @@ lst_elem_t lst_iter_deref(lst_iter_t t);
 int lst_iter_is_null(lst_iter_t t);
 
 /* Возвращает количество элементов в списке lst. */
-size_t lst_size(list_t lst);
+size_t lst_size(list_t* lst);
 
 #endif  /* LST_LIST_H */
