@@ -134,10 +134,10 @@ lst_iter_t lst_find(list_t lst, lst_elem_t val);
 void lst_for_each(list_t lst, lst_elem_t (*f)(lst_elem_t));
 
 /* Возвращает наибольший элемент непустого списка lst. */
-lst_elem_t lst_max(list_t lst);
+lst_elem_t lst_max(list_t* lst);
 
 /* Возвращает наибольший элемент непустого списка lst. */
-lst_elem_t lst_min(list_t lst);
+lst_elem_t lst_min(list_t* lst);
 
 /* Случайным образов переставляет элементы в списке lst. */
 void lst_random_shuffle(list_t lst);

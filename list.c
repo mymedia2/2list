@@ -191,9 +191,8 @@ list_t* lst_copy(list_t* lst) {
 	return p;
 }
 
-#if zero
 /* Возвращает наибольший элемент непустого списка lst. */
-lst_elem_t lst_max(list_t lst) {
+lst_elem_t lst_max(list_t* lst) {
 	lst_elem_t max;
 	lst_iter_t it = lst_iter_by_index(lst, 0);
 	max = lst_iter_deref(it);
@@ -204,8 +203,8 @@ lst_elem_t lst_max(list_t lst) {
 	return max;
 }
 
-/* Возвращает наибольший элемент непустого списка lst. */
-lst_elem_t lst_min(list_t lst) {
+/* Возвращает наименьший элемент непустого списка lst. */
+lst_elem_t lst_min(list_t* lst) {
 	lst_elem_t min;
 	lst_iter_t it = lst_iter_by_index(lst, 0);
 	min = lst_iter_deref(it);
@@ -215,7 +214,6 @@ lst_elem_t lst_min(list_t lst) {
 	}
 	return min;
 }
-#endif // zero
 
 lst_iter_t lst_iter_first(list_t* lst) {
 	return lst_iter_by_index(lst, 0);

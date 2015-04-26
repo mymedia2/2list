@@ -35,6 +35,8 @@ int main() {
 	}
 	printf("}\n");
 
+	printf("max == %ld, min == %ld\n", lst_max(T), lst_min(T));
+
 	lst_free(T);
 
 	return 0;
