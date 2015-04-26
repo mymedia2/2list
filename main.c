@@ -18,6 +18,8 @@ int main() {
 		lst_append(L, 13);
 	}
 
+	lst_replace(L, 42, 24); 
+
 	printf("L = { ");
 	for (p = lst_iter_first(L); !lst_iter_is_null(p); p = lst_iter_next(p)) {
 		printf("%ld, ", lst_iter_deref(p));
@@ -42,7 +44,7 @@ int main() {
 	printf("}\n");
 
 	printf("max == %ld, min == %ld\n", lst_max(T), lst_min(T));
-
+	printf ("Элемент 14 встречается в списке T %zd раз\n", lst_count(T, 14));
 	lst_free(T);
 
 	return 0;

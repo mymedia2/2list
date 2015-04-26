@@ -104,15 +104,8 @@ lst_iter_t lst_iter_by_index(list_t* lst, size_t i);
 /* Возвращает i-тый элемент списка lst. */
 lst_elem_t lst_index(list_t* lst, size_t i);
 
-/*  Выполняет бинарный поиск значения val в списке lst.
-
-    Возвращает итератор, указывающий на найденный элемент. Список должен быть
-    отсортирован.
-*/
-lst_iter_t lst_binsearch(list_t lst, lst_elem_t val);
-
 /* Возвращает количесво элементов со значением val в списке lst. */
-size_t lst_count(list_t lst, lst_elem_t val);
+size_t lst_count(list_t* lst, lst_elem_t val);
 
 /* Возвращает копию списка lst, если не удалось скопировать, то возращает NULL*/
 list_t* lst_copy(list_t* lst);
@@ -144,7 +137,7 @@ lst_elem_t lst_min(list_t* lst);
 void lst_random_shuffle(list_t lst);
 
 /* Заменяет в списке lst все вхождения элемента from на to. */
-int lst_replace(list_t lst, lst_elem_t from, lst_elem_t to);
+int lst_replace(list_t* lst, lst_elem_t from, lst_elem_t to);
 
 /* Удаляет из списка lst все вхождения элемента val. */
 int lst_remove(list_t lst, lst_elem_t val);

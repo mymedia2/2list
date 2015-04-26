@@ -191,6 +191,16 @@ list_t* lst_copy(list_t* lst) {
 	return p;
 }
 
+int lst_replace(list_t* lst, lst_elem_t from, lst_elem_t to) {
+	lst_iter_t it = lst_iter_by_index(lst, 0);
+	for (; !lst_iter_is_null(it); it = lst_iter_next(it)) {
+		if (lst_iter_deref(it) == from) { 
+			it.box->elems[it.offset] = to;
+		}
+	}
+	return 0;
+}
+
 /* Возвращает наибольший элемент непустого списка lst. */
 lst_elem_t lst_max(list_t* lst) {
 	lst_elem_t max;
@@ -223,19 +233,30 @@ void lst_delete(lst_iter_t it) {
 	size_t k, m;
 	k = it.box->count;
 	if (k == 1) {
-		struct lst_node_* t;
+		struct lst_node_ *t;
 		t = it.box;
 		t->next = it.box->next;
 		t = it.box->next;
 		t->prev = it.box->prev;
 		t = it.box;
-		free(t);
+		free (t);
 	} else {
 		m = it.offset;
 		while (m < k) {
-			/* FIXME: неопределённое поведение */
-			it.box->elems[m] = it.box->elems[++m];
+			it.box->elems[m] = it.box->elems[m+1];
+			m++;
 		}
 		it.box->count--;
 	}
+}
+
+size_t lst_count(list_t* lst, lst_elem_t val) {
+	lst_iter_t it = lst_iter_first(lst);
+	size_t kol = 0;
+	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
+		if (lst_iter_deref(it) == val) {
+			kol = kol + 1;
+		}
+	}
+	return kol;
 }
