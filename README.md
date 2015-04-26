@@ -66,8 +66,8 @@ printf("Hello, world!");
 ### lst_new
 <!-- doctest: run -->
 ```c
-list_t L;
-if (!lst_new(&L)) {
+list_t* L;
+if (!(L = lst_new(0))) {
 	/* ошибка при создании списка  */
 	abort();
 }
@@ -78,8 +78,8 @@ lst_free(L);
 ### lst_free
 <!-- doctest: pass -->
 ```c
-list_t L;
-if (!lst_new(&L)) {
+list_t* L;
+if (!(L = lst_new(0))) {
 	/* ошибка при создании списка  */
 	abort();
 }
@@ -101,10 +101,12 @@ lst_append(L, 13);
 **Результат:** `96 78 84 61 57 30 43 50 71 42 13`
 
 ### lst_insert_before
-<!-- doctest: before -->
+Ещё не готова
+
+<!-- doctest: pass -->
 **Список:** `28 13 74 2 52 58 68 95 65`
 
-<!-- doctest: code -->
+<!-- doctest: pass -->
 ```c
 lst_iter_t p = lst_find(L, 68);
 lst_insert_before(p, 42);
@@ -141,6 +143,8 @@ lst_index(L, 11) == 90;
 ```
 
 ### lst_clear
+Пропускается из-за итераторов
+
 <!-- doctest: pass -->
 **Список:** `65 15 44 42 51 4 74 40 75`
 
@@ -154,11 +158,12 @@ lst_clear(L);
 
 ### lst_count
 <!-- doctest: before -->
-**Список:** `37 13 78 74 13 29 71 6 13 51 90 32 13 95`
+**Список:** `37 13 78 78 13 29 78 6 13 51 90 32 13 95`
 
 <!-- doctest: assert -->
 ```c
 lst_count(L, 13) == 4;
+lst_count(L, 78) == 3;
 ```
 
 ### lst_copy
@@ -212,6 +217,8 @@ lst_replace(L, 69, 42);
 **Результат:** `35 60 42 4 42 82 42 42 90 32 87 42 76`
 
 ### lst_remove
+Ещё не готова
+
 <!-- doctest: pass -->
 **Список:** `66 42 56 42 29 1 73 42 97 34 42 63`
 
@@ -224,6 +231,8 @@ lst_remove(L, 42);
 **Результат:** `66 56 29 1 73 97 34 63`
 
 ### lst_sort
+Ещё не готова
+
 <!-- doctest: pass -->
 **Список:** `61 78 91 19 40 11 63 62 42 55 15 35`
 

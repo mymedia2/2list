@@ -55,7 +55,7 @@ def assert_pre():
 	print("lst_free(L); }")
 
 def before():
-	print("{ list_t L; lst_new(&L);")
+	print("{ list_t* L = lst_new(0);")
 	for elem in get_line_block().split():
 		print("lst_append(L, {0});".format(elem))
 
