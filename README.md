@@ -18,10 +18,14 @@
 | [lst_free](#lst_free) | Освобождает память, занимаемую списком | O(n) | [Гурьев](https://github.com/mymedia2/2list/commits?author=mymedia2) | Протестирована |
 | [lst_append](#lst_append) | Добавляет элемент в конец | const | [Макаровская](https://github.com/mymedia2/2list/commits?author=mnika1996) | Протестирована |
 | [lst_insert_before](#lst_insert_before) | Добавляет элемент перед тем, на который указывает итератор | const | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Не реализована |
+| lst_insert_range | Копирует в список элементы массива | O(n) | — | Запланирована |
+| lst_insert_list | Копирует в список элементы из другого списка | O(n) | — | Запланирована |
 | [lst_delete](#lst_delete) | Удаляет элемент, на который указывает итератор | const | [Копцева](https://github.com/mymedia2/2list/commits?author=Treenoga) | Не проходит тесты |
 | [lst_clear](#lst_clear) | Удаляет все элементы в списке | O(n) | [Копцева](https://github.com/mymedia2/2list/commits?author=Treenoga) | Протестирована |
+| lst_empty | Проверяет, не является ли список пустым | const | — | Запланирована |
 | [lst_size](#lst_size) | Вычисляет размер списка | O(n) | [Руденко](https://github.com/mymedia2/2list/commits?author=gr33n-made) | Протестирована |
 | [lst_index](#lst_index) | Возвращает элемент с заданным номером | O(n) | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
+| lst_repack | Переупаковывает список | O(n) | [Гурьев](https://github.com/mymedia2/2list/commits?author=mymedia2) | Нет тестов |
 Следующие функции предназначены для работы с итераторами. Их определения можно найти в файле [list.c](list.c). _Примечание:_ алгоритмическая сложность этих функций постоянна.
 
 | Название | Описание | Ответсвенный | Готовность |

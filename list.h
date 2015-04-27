@@ -76,6 +76,7 @@ int lst_append(list_t* lst, lst_elem_t el);
 int lst_insert_before(lst_iter_t it, lst_elem_t el);
 void lst_delete(lst_iter_t it);
 void lst_clear(list_t* lst);
+void lst_repack(list_t* lst);
 
 /* Возвращает итератор, указывающий на i-тый элемент списка lst. */
 lst_iter_t lst_iter_by_index(list_t* lst, size_t i);
