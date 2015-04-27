@@ -21,15 +21,16 @@
 | [lst_delete](#lst_delete) | Удаляет элемент, на который указывает итератор | const | [Копцева](https://github.com/mymedia2/2list/commits?author=Treenoga) | Не проходит тесты |
 | [lst_clear](#lst_clear) | Удаляет все элементы в списке | O(n) | [Копцева](https://github.com/mymedia2/2list/commits?author=Treenoga) | Протестирована |
 | [lst_size](#lst_size) | Вычисляет размер списка | O(n) | [Руденко](https://github.com/mymedia2/2list/commits?author=gr33n-made) | Протестирована |
-```c
-lst_iter_t lst_iter_by_index(list_t lst, size_t i); // Дима Т.
-lst_elem_t lst_index(list_t lst, size_t i); // Дима Т.
-lst_iter_t lst_iter_next(lst_iter_t t); // Дима Т.
-lst_iter_t lst_iter_prev(lst_iter_t t); // Дима Т.
-lst_elem_t lst_iter_deref(lst_iter_t t); // Дима Т.
-int lst_iter_is_null(lst_iter_t t); // Дима Т.
-```
+| [lst_index](#lst_index) | Возвращает элемент с заданным номером | O(n) | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
+Следующие функции предназначены для работы с итераторами.
 
+| Название | Описание | Ответсвенный | Готовность |
+| -------- | -------- | ------------ | ---------- |
+| [lst_iter_next](#lst_iter_next) | Возвращает итератор на следующий элемент списка | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
+| [lst_iter_prev](#lst_iter_prev) | Возвращает итератор на предыдущий элемент списка | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Нет тестов |
+| [lst_iter_is_null](#lst_iter_is_null) | Проверяет, является ли итератор нулевым | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
+| [lst_iter_deref](#lst_iter_deref) | Возвращает значение элемента, на который указывает итератор | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
+| [lst_iter_by_index](#lst_iter_by_index) | Возвращает итератор, на элемент с заданным номером | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
 ### Алгоритмы
 ```c
 lst_iter_t lst_binsearch(list_t lst, lst_elem_t val); // Коля (не будем делать)
