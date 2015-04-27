@@ -262,3 +262,35 @@ size_t lst_count(list_t* lst, lst_elem_t val) {
 	}
 	return kol;
 }
+
+void lst_repack(list_t* lst) {
+	struct lst_node_* curr;
+	const size_t n = sizeof(curr->elems) / sizeof(*curr->elems);
+
+	for (curr = lst->begin; curr != NULL; curr = curr->next) {
+		if (!curr->count) {
+			/* если в текущем звене нет элементов, то выкидываем его */
+			if (curr->prev) curr->prev->next = curr->next;
+			if (curr->next) curr->next->prev = curr->prev;
+			free(curr);
+		} else if (curr->count < n && curr->next) {
+			/* если текущее звено заполнено не полностью и есть следующее */
+			size_t i, j;
+
+			/* то копируем в него элементы из следующего звена */
+			for (i = curr->count, j = 0; i < n && j < curr->next->count; i++, j++) {
+				curr->elems[i] = curr->next->elems[j];
+			}
+			/* устаналиваем count либо в n, либо в count + next->count */
+			curr->count = i;
+
+			/* сдвигаем оставшиеся элементы в следующем звене */
+			for (i = 0, j; j < curr->next->count; i++, j++) {
+				curr->next->elems[i] = curr->next->elems[j];
+			}
+			/*	устанавливаем next->count в индекс, последнего
+				скопированного элемента, плюс один */
+			curr->next->count = i;
+		}
+	}
+}

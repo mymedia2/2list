@@ -166,6 +166,18 @@ lst_count(L, 13) == 4;
 lst_count(L, 78) == 3;
 ```
 
+### lst_repack
+<!-- doctest: before -->
+**Список:** `20 88 70 63 5 21 19 89 47 94 87 9 55 79 62 93 97 34 16 61 72 12 38 31 15`
+
+<!-- doctest: code -->
+```c
+lst_repack(L);
+```
+
+<!-- doctest: after -->
+**Результат:** `20 88 70 63 5 21 19 89 47 94 87 9 55 79 62 93 97 34 16 61 72 12 38 31 15`
+
 ### lst_copy
 ### lst_compare
 ### lst_find
