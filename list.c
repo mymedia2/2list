@@ -1,61 +1,114 @@
+#include <assert.h>
 #include <stdlib.h>
 
 #include "list.h"
 
-int lst_new(list_t* p) {
-    struct lst_node_* tmp;
+list_t* lst_new(int arg_flags) {
+	list_t* list;
+	struct lst_node_* node;
 
-    tmp = malloc(sizeof(*tmp));
-    if (!tmp) {
-        /* не удалось выделить память — ошибка */
-        return 0;
-    }
+	/* создаём список и его первое звено */
+	list = malloc(sizeof(*list));
+	if (!list) {
+		/* не удалось выделить память — ошибка */
+		return NULL;
+	}
+	node = malloc(sizeof(*node));
+	if (!node) {
+		/*	не удалось выделить память — ошибка,
+			нужно освободить уже выделенную память для списка */
+		free(list);
+		return NULL;
+	}
 
-    tmp->next = NULL;
-    tmp->prev = NULL;
-    tmp->count = 0;
-    *p = tmp;
-    return 1;
+	/*	проставление ссылок в структуре list_t
+		и инициализация первого звена */
+	list->begin = list->end = node;
+	list->flags = arg_flags;
+	node->count = 0;
+	node->next = node->prev = NULL;
+
+	return list;
 }
 
-void lst_free(list_t lst) {
-    lst_clear(lst);
-    free(lst);
+void lst_free(list_t* lst) {
+	lst_clear(lst);
+	/*	в данной реализации подразумевается, что в пустом списке всегда
+		есть одно звено, в котором поле count равно 0 */
+	assert(lst->begin == lst->end);
+	free(lst->begin);
+	free(lst);
 }
 
-void lst_clear(list_t lst) {
-    struct lst_node_* t, *p;
-    t = lst;
-    /* Удаляем элементы в первой ноде */
-    t->count = 0;
-    /* Удаляем весь остальной список*/
-    t = t->next;
-    while(t != NULL) {
-        p = t;
-        t = t->next;
-        free(p);
-    }
+void lst_clear(list_t* lst) {
+	struct lst_node_* tmp;
+	struct lst_node_* ptr;
+
+	/* удаляем элементы в первом звене */
+	lst->begin->count = 0;
+
+	/* удаляем весь остальной список */
+	tmp = lst->begin->next;
+	while (tmp) {
+		ptr = tmp;
+		tmp = tmp->next;
+		free(ptr);
+	}
+
+	/* синхронизируем указатели в списке */
+	lst->end = lst->begin;
 }
 
-lst_iter_t lst_iter_by_index(list_t lst, size_t i) {
-    lst_iter_t t;
-    size_t j;
-    const size_t size = sizeof(lst->elems) / sizeof(*lst->elems);
+int lst_append(list_t* list, lst_elem_t el) {
+	struct lst_node_* const last_node = list->end;
+	const size_t n = sizeof(last_node->elems) / sizeof(*last_node->elems);
 
-    for (j = size; j < i; j += size) {
-        lst = lst->next;
-    }
-    t.box = lst;
-    t.offset = i % size;
+	if (last_node->count < n) {
+		/* в последнем звене ещё есть место — вставляем элемент туда */
+		last_node->elems[last_node->count++] = el;
+	} else {
+		/* последнее звено полностью заполнено — создаём новое */
+		struct lst_node_* tmp;
 
-    return t;
+		tmp = malloc(sizeof(*tmp));
+		if (!tmp) {
+			/* не удалось выделить память — ошибка */
+			return 0;
+		}
+
+		/* инициализируем вновь созданное звено */
+		tmp->elems[0] = el;
+		tmp->count = 1;
+		tmp->prev = last_node;
+		tmp->next = NULL;
+
+		/* прицепляем новое звено к списку */
+		last_node->next = list->end = tmp;
+	}
+
+	return 1;
+}
+
+lst_iter_t lst_iter_by_index(list_t* list, size_t index) {
+	lst_iter_t it;
+	struct lst_node_* curr = list->begin;
+
+	while (index >= curr->count) {
+		index -= curr->count;
+		curr = curr->next;
+	}
+
+	it.box = curr;
+	it.offset = index;
+
+	return it;
 }
 
 lst_elem_t lst_iter_deref(lst_iter_t t) {
     return t.box->elems[t.offset];
 }
 
-lst_elem_t lst_index(list_t lst, size_t i) {
+lst_elem_t lst_index(list_t* lst, size_t i) {
     return lst_iter_deref(lst_iter_by_index(lst, i));
 }
 
@@ -83,6 +136,7 @@ int lst_iter_is_null( lst_iter_t t ) {
     return t.box == NULL;
 }
 
+#if zero
 int lst_insert_before(lst_iter_t it, lst_elem_t el) {
     const size_t n = sizeof(it.box->elems) / sizeof(lst_elem_t); 
     if (it.box->count < n && it.offset != 0) {
@@ -113,67 +167,43 @@ int lst_insert_before(lst_iter_t it, lst_elem_t el) {
         it.box->prev = tmp;
     }
 }
+#endif // zero
 
-size_t lst_size(list_t lst) {
-	list_t counter_lst = lst;
+size_t lst_size(list_t* lst) {
+	lst_iter_t p;
 	size_t counter = 0;
-	while ((counter_lst->next) != NULL) {
-		counter_lst = counter_lst->next;
-        counter++; //Считаем кол-во объектов с списке
-    }
 
-	counter *= 10; ///У нас 10 элементов в объекте, так что считаем число counter*10;
-	counter += counter_lst->count; //Элементы в последнем звене;
-    return counter;
-}
-
-int lst_append(list_t lst, lst_elem_t el) {
-    list_t p;
-    if (lst->count == 0) {
-		lst->elems[lst->count++] = el;
-		
-	} else {
-		
-		while (lst->next) lst=lst->next;
-		if (lst->count < sizeof(lst->elems) / sizeof(*lst->elems)) {
-			lst->elems[lst->count++] = el;
-		} else {
-		/*Здесь функция lst_new(&p) создает не список, а звено*/
-			if (lst_new(&p)) {
-				p->elems[0] = el;
-				p->count = 1;
-				lst->next = p;
-				p->prev = lst;
-			} else return 0;
-		}
+	for (p = lst_iter_first(lst); !lst_iter_is_null(p); p = lst_iter_next(p)) {
+		counter++;
 	}
-    return 1;
+
+	return counter;
 }
 
-list_t lst_copy(list_t lst) {
-	list_t p;
-	if (lst_new(&p)) {
+list_t* lst_copy(list_t* lst) {
+	list_t* p;
+
+	if (p = lst_new(0)) {
 		lst_iter_t it = lst_iter_by_index(lst, 0);
 		for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
 			lst_append(p, lst_iter_deref(it));
 		}
-		return p;
-	} else {
-		return NULL;
 	}
+	return p;
 }
 
-int lst_replace(list_t lst, lst_elem_t from, lst_elem_t to) {
+int lst_replace(list_t* lst, lst_elem_t from, lst_elem_t to) {
 	lst_iter_t it = lst_iter_by_index(lst, 0);
-	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
-		if ( lst_iter_deref(it) == from ) { 
+	for (; !lst_iter_is_null(it); it = lst_iter_next(it)) {
+		if (lst_iter_deref(it) == from) { 
 			it.box->elems[it.offset] = to;
 		}
 	}
 	return 0;
 }
 
-lst_elem_t lst_max(list_t lst) {
+/* Возвращает наибольший элемент непустого списка lst. */
+lst_elem_t lst_max(list_t* lst) {
 	lst_elem_t max;
 	lst_iter_t it = lst_iter_by_index(lst, 0);
 	max = lst_iter_deref(it);
@@ -184,7 +214,8 @@ lst_elem_t lst_max(list_t lst) {
 	return max;
 }
 
-lst_elem_t lst_min(list_t lst) {
+/* Возвращает наименьший элемент непустого списка lst. */
+lst_elem_t lst_min(list_t* lst) {
 	lst_elem_t min;
 	lst_iter_t it = lst_iter_by_index(lst, 0);
 	min = lst_iter_deref(it);
@@ -195,37 +226,71 @@ lst_elem_t lst_min(list_t lst) {
 	return min;
 }
 
-lst_iter_t lst_iter_first(list_t lst) {
+lst_iter_t lst_iter_first(list_t* lst) {
 	return lst_iter_by_index(lst, 0);
 }
 
 void lst_delete(lst_iter_t it) {
-    size_t k, m;
-    k = it.box->count;
-    if (k == 1) {
-        struct lst_node_ *t;
-        t = it.box;
-        t->next = it.box->next;
-        t = it.box->next;
-        t->prev = it.box->prev;
-        t = it.box;
-        free (t);
-    } else {
-        m = it.offset;
-        while (m < k) {
+	size_t k, m;
+	k = it.box->count;
+	if (k == 1) {
+		struct lst_node_ *t;
+		t = it.box;
+		t->next = it.box->next;
+		t = it.box->next;
+		t->prev = it.box->prev;
+		t = it.box;
+		free (t);
+	} else {
+		m = it.offset;
+		while (m < k) {
+			/* FIXME: выход за границы диапазона */
 			it.box->elems[m] = it.box->elems[m+1];
 			m++;
-        }
+		}
 		it.box->count--;
-    }
+	}
 }
 
-size_t lst_count(list_t lst, lst_elem_t val) {
+size_t lst_count(list_t* lst, lst_elem_t val) {
 	lst_iter_t it = lst_iter_first(lst);
-	size_t kol;
-	kol = 0;
+	size_t kol = 0;
 	for (; !lst_iter_is_null(it); it = lst_iter_next(it) ) {
-		if ( lst_iter_deref(it) == val) { kol = kol + 1; }
+		if (lst_iter_deref(it) == val) {
+			kol = kol + 1;
+		}
 	}
 	return kol;
+}
+
+void lst_repack(list_t* lst) {
+	struct lst_node_* curr;
+	const size_t n = sizeof(curr->elems) / sizeof(*curr->elems);
+
+	for (curr = lst->begin; curr != NULL; curr = curr->next) {
+		if (!curr->count) {
+			/* если в текущем звене нет элементов, то выкидываем его */
+			if (curr->prev) curr->prev->next = curr->next;
+			if (curr->next) curr->next->prev = curr->prev;
+			free(curr);
+		} else if (curr->count < n && curr->next) {
+			/* если текущее звено заполнено не полностью и есть следующее */
+			size_t i, j;
+
+			/* то копируем в него элементы из следующего звена */
+			for (i = curr->count, j = 0; i < n && j < curr->next->count; i++, j++) {
+				curr->elems[i] = curr->next->elems[j];
+			}
+			/* устаналиваем count либо в n, либо в count + next->count */
+			curr->count = i;
+
+			/* сдвигаем оставшиеся элементы в следующем звене */
+			for (i = 0, j; j < curr->next->count; i++, j++) {
+				curr->next->elems[i] = curr->next->elems[j];
+			}
+			/*	устанавливаем next->count в индекс, последнего
+				скопированного элемента, плюс один */
+			curr->next->count = i;
+		}
+	}
 }

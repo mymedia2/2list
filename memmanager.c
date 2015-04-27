@@ -1,11 +1,11 @@
 #include <stdio.h>
 
-static char heap[512][32];
+static char heap[30][200];
 static unsigned short ex = 0;
 
 extern void* malloc(size_t b) {
 	fprintf(stderr, "Вызван malloc(%zd)\n", b);
-	if (b > 512) return NULL;
+	if (b > sizeof *heap / sizeof **heap) return NULL;
 	return heap[ex++];
 }
 
