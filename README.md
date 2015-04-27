@@ -30,10 +30,10 @@
 
 | Название | Описание | Ответсвенный | Готовность |
 | -------- | -------- | ------------ | ---------- |
-| [lst_iter_next](#lst_iter_next) | Возвращает итератор на следующий элемент списка | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
-| [lst_iter_prev](#lst_iter_prev) | Возвращает итератор на предыдущий элемент списка | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Нет тестов |
-| [lst_iter_is_null](#lst_iter_is_null) | Проверяет, является ли итератор нулевым | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
-| [lst_iter_deref](#lst_iter_deref) | Возвращает значение элемента, на который указывает итератор | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
+| lst_iter_next | Возвращает итератор на следующий элемент списка | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
+| lst_iter_prev | Возвращает итератор на предыдущий элемент списка | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Нет тестов |
+| lst_iter_is_null | Проверяет, является ли итератор нулевым | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
+| lst_iter_deref | Возвращает значение элемента, на который указывает итератор | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
 | [lst_iter_by_index](#lst_iter_by_index) | Возвращает итератор, на элемент с заданным номером | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Протестирована |
 ### Алгоритмы
 Нижеследующие функции реализуют стандартные алгоритмы для нашего списка. Их реализации хранятся в файле [algorithm.c](algorithm.c).
@@ -52,7 +52,7 @@
 | [lst_replace](#lst_replace) | Заменяет все вхождения одного значения на другое | O(n) | [Чжун](https://github.com/mymedia2/2list/commits?author=russjungbok) | Протестирована |
 | [lst_remove](#lst_remove) | Удаляет из списка все вхождения заданного значения | O(n) | [Чжун](https://github.com/mymedia2/2list/commits?author=russjungbok) | Не реализована |
 | [lst_sort](#lst_sort) | Сортирует список | O(n log n) | [Руденко](https://github.com/mymedia2/2list/commits?author=gr33n-made) | Не реализована |
-| [lst_swap](#lst_swap) | Обменивает два списка | const | [Макаровская](https://github.com/mymedia2/2list/commits?author=mnika1996) | Не реализована |
+| lst_swap | Обменивает два списка | const | [Макаровская](https://github.com/mymedia2/2list/commits?author=mnika1996) | Не реализована |
 ## Тесты
 В этом разделе содержатся описания работы всех функций из этой библиотеке. Ко многим из них преведены примеры их использования. Эти примеры одновременно являются и тестами. Чтобы запутить их, выполните команду `make` в каталоге с репозиторием. По этой команде запустится скрипт `./doctest.py`, который на основе данного файла сформирует код на Си, и скомпилирует его. Если все тесты будут пройдены,выводится соответствуещее сообщение, иначе будут показаны различия между выводом программы и приведёнными здесь результатами.
 
@@ -239,7 +239,6 @@ lst_max(L) == 83;
 lst_min(L) == 15;
 ```
 
-### lst_random_shuffle
 ### lst_replace
 <!-- doctest: before -->
 **Список:** `35 60 69 4 69 82 42 69 90 32 87 69 76`
