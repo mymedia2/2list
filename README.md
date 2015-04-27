@@ -10,20 +10,24 @@
 | lst_elem_t | Тип элементов, хранящихся в списке. Работоспособность этой библиотеки проверена исходся, что этот тип является целочисленными. **TODO**: организовать работу библиотки при общем типе. |
 
 ### Интерфейс
+Библиотека предоставляет интерфейс для работы со списком. Реализация этих функция находится в файле [list.c](list.c)
+
+| Название | Описание | Сложность | Ответсвенный | Готовность |
+| -------- | -------- | --------- | ------------ | ---------- |
+| [lst_new](#lst_new) | Создаёт новый список | const | [Гурьев](https://github.com/mymedia2/2list/commits?author=mymedia2) | Протестирована |
+| [lst_free](#lst_free) | Освобождает память, занимаемую списком | O(n) | [Гурьев](https://github.com/mymedia2/2list/commits?author=mymedia2) | Протестирована |
+| [lst_append](#lst_append) | Добавляет элемент в конец | const | [Макаровская](https://github.com/mymedia2/2list/commits?author=mnika1996) | Протестирована |
+| [lst_insert_before](#lst_insert_before) | Добавляет элемент перед тем, на который указывает итератор | const | [Табалин](https://github.com/mymedia2/2list/commits?author=Iluvmagick) | Не реализована |
+| [lst_delete](#lst_delete) | Удаляет элемент, на который указывает итератор | const | [Копцева](https://github.com/mymedia2/2list/commits?author=Treenoga) | Не проходит тесты |
+| [lst_clear](#lst_clear) | Удаляет все элементы в списке | O(n) | [Копцева](https://github.com/mymedia2/2list/commits?author=Treenoga) | Протестирована |
+| [lst_size](#lst_size) | Вычисляет размер списка | O(n) | [Руденко](https://github.com/mymedia2/2list/commits?author=gr33n-made) | Протестирована |
 ```c
-int lst_new(list_t* p); // Коля
-void lst_free(list_t lst); // Коля
-int lst_append(list_t lst, lst_elem_t el); // Вероника
-int lst_insert_before(lst_iter_t it, lst_elem_t el); // Дима Т.
-void lst_delete(lst_iter_t it); // Ксюша
 lst_iter_t lst_iter_by_index(list_t lst, size_t i); // Дима Т.
 lst_elem_t lst_index(list_t lst, size_t i); // Дима Т.
-void lst_clear(list_t lst); // Ксюша
 lst_iter_t lst_iter_next(lst_iter_t t); // Дима Т.
 lst_iter_t lst_iter_prev(lst_iter_t t); // Дима Т.
 lst_elem_t lst_iter_deref(lst_iter_t t); // Дима Т.
 int lst_iter_is_null(lst_iter_t t); // Дима Т.
-size_t lst_size(list_t lst); // Дима Р.
 ```
 
 ### Алгоритмы
