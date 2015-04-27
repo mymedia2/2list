@@ -70,33 +70,12 @@ typedef struct {
 	size_t offset;
 } lst_iter_t;
 
-/*  Создаёт и инициализирует список, на который указывает p.
-
-    В случае успеха возвращает ненулевое значение, иначе 0.
-*/
 list_t* lst_new(int flags);
-
-/* Уничтожает список lst и освобождает память. */
 void lst_free(list_t* lst);
-
-/* Очищает список lst. */
-void lst_clear(list_t* lst);
-
-/*	Вставляет элемент el в конец списка lst.
-
-	В случае успеха возвращает ненулевое значение, иначе 0. Если произошли
-	ошибки — список остаётся в корректном состоянии.
-*/
 int lst_append(list_t* lst, lst_elem_t el);
-
-/*  Вставляет элемент el перед тем, на который указывает it.
-
-    В случае успеха возвращает ненулевое значение, иначе 0.
-*/
 int lst_insert_before(lst_iter_t it, lst_elem_t el);
-
-/* Удаляет элемент, на который указывает it. */
 void lst_delete(lst_iter_t it);
+void lst_clear(list_t* lst);
 
 /* Возвращает итератор, указывающий на i-тый элемент списка lst. */
 lst_iter_t lst_iter_by_index(list_t* lst, size_t i);
